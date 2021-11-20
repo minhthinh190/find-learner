@@ -1,5 +1,5 @@
-import { initializeApp } from 'firebase/app'
 import { config } from '~/firebase/config'
+import { initializeApp } from 'firebase/app'
 import {
   getFirestore,
   collection,
