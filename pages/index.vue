@@ -1,67 +1,136 @@
 <template>
   <v-container
     fluid
-    class="py-7 pa-sm-16 root-container"
+    class="pa-sm-16 root-container"
   >
     <v-row
       justify="space-between"
-      class="px-md-16"
+      class="mb-16 px-md-16"
     >
-      <v-col
-        cols="12"
-        sm="12"
-        md="6"
-        class="pr-md-10"
-      >
-        <div>
-          <h1 class="pb-4">
-            Lorem ipsum dolor sit amet
-          </h1>
-          <p class="pb-4">
-            Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum.
-          </p>
+      <v-col cols="12">
+        <div class="text-center">
+          <h1>Lorem ipsum dolor sit amet</h1>
+        </div>
 
-          <nuxt-link
-            to="/connect"
-            class="link"
-          >
-            <v-btn
-              color="teal darken-1"
-              depressed
-              class="pa-5 white--text"
+        <v-spacer class="my-6"/>
+
+        <!-- Filter & Search Bar -->
+        <v-container fluid class="px-2 py-0">
+          <v-sheet class="px-5 py-4">
+            <v-row justify="space-between">
+              <v-col cols="2" class="px-2 py-0">
+                <v-select
+                  label="Subject"
+                  color="teal darken-1"
+                  background-color="grey lighten-4"
+                  :items="['All', 'Math', 'English', 'Physics']"
+                  solo
+                  dense
+                  flat
+                  hide-details
+                  class="my-3"
+                ></v-select>
+              </v-col>
+
+              <v-col cols="4" class="px-2">
+                <v-container class="pa-0 d-flex">
+                  <v-text-field
+                    label="Find by ID"
+                    color="teal accent-4"
+                    dense
+                    outlined
+                    hide-details
+                  ></v-text-field>
+
+                  <div>
+                    <v-btn
+                      height="100%"
+                      dark
+                      depressed
+                      color="teal darken-1"
+                      class="ml-2"
+                    >
+                      <v-icon>mdi-magnify</v-icon>
+                    </v-btn>
+                  </div>
+                </v-container>
+              </v-col>
+            </v-row>
+          </v-sheet>
+        </v-container>
+
+        <v-spacer class="my-2"/>
+
+        <!-- Request Card Container -->
+        <v-container fluid>
+          <v-row>
+            <v-col
+              v-for="(item, index) in count"
+              :key="index"
+              cols="4"
+              class="pa-2"
             >
-              Let's Connect
-            </v-btn>
-          </nuxt-link>
-        </div>
-      </v-col>
+              <v-card tile elevation="0">
+                <v-card-subtitle class="py-2">
+                  <div class="d-flex justify-space-between">
+                    <p class="ma-0 request-id">
+                      <strong>1002</strong>
+                    </p>
+                    <p class="ma-0">20/11/2021</p>
+                  </div>
+                </v-card-subtitle>
 
-      <v-col
-        cols="12"
-        sm="12"
-        md="6"
-        class="pl-md-10"
-      >
-        <div>
-          <img
-            src="~/assets/images/cover_image.jpg"
-            alt="cover image"
-            class="cover-image"
-          />
-        </div>
+                <v-divider class="mx-4 my-0"/>
+
+                <v-card-text class="py-3 card-text">
+                  <p class="ma-0">
+                    <strong>Subject: </strong>Math
+                  </p>
+                  <v-spacer class="mb-2"/>
+                  <p class="ma-0">
+                    <strong>Format: </strong>Offline
+                  </p>
+                  <v-spacer class="mb-2"/>
+                  <p class="ma-0">
+                    <strong>Address: </strong>21st Jump Street
+                  </p>
+                </v-card-text>
+
+                <v-card-actions class="px-4">
+                  <v-spacer />
+                  <v-btn
+                    text
+                    color="teal darken-1"
+                    class="text-capitalize"
+                  >
+                    Details
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import AppBar from '~/components/AppBar'
+import { requestAPI } from '~/api/request'
 
 export default {
   middleware: 'auth',
   layout: 'appbar',
-  components: {
-    AppBar
+  data () {
+    return {
+      count: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    }
+  },
+  methods: {
+    async getAllPendingRequests () {
+      const pendingRequests = await requestAPI.getAllPendingRequests()
+      console.log(pendingRequests)
+    }
   }
 }
 </script>
@@ -70,13 +139,10 @@ export default {
 .box {
   border: 1px solid red;
 }
-.link {
-  text-decoration: none;
+.request-id {
+  color: #00BFA5;
 }
-.inside-box {
-  border: 1px solid blue;
-}
-.cover-image {
-  width: 100%;
+.card-text {
+  font-size: 15px;
 }
 </style>
