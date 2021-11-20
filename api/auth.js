@@ -1,5 +1,16 @@
+import { config } from '~/firebase/config'
 import { authService } from '~/firebase/auth'
-import { bookingAPI } from './booking'
+import {
+  getFirestore,
+  collection,
+  getDocs
+} from 'firebase/firestore'
+import { initializeApp } from '@firebase/app'
+
+initializeApp(config)
+
+const db = getFirestore()
+const _rootCollection = 'tutor'
 
 const signUserIn = (email, password) => {
   return authService.signUserIn(email, password)
@@ -21,10 +32,6 @@ const signUserUp = (email, password) => {
 
       return { uid, email }
     })
-    .then (async ({ uid, email }) => {
-      await bookingAPI.createBookingCounter(email)
-      return { uid, email }
-    })
 }
 
 const signUserOut = () => {
@@ -35,7 +42,17 @@ const signUserOut = () => {
     })
 }
 
+const getTutors = async () => {
+  const querySnapshot = await getDocs(
+    collection(db, _rootCollection)
+  )
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id)
+  })
+}
+
 export const authAPI = {
+  getTutors,
   signUserIn,
   signUserUp,
   signUserOut
