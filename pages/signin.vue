@@ -47,6 +47,7 @@
                   color="teal darken-1"
                   depressed
                   block
+                  :loading="isSigningIn"
                   class="py-5 text-capitalize white--text"
                   @click="signIn"
                 >
@@ -87,20 +88,25 @@ export default {
       passwordRules: [
         val => !!val || msg.auth.pwRequired,
         val => (val && val.length > 6) || msg.auth.invalidPwLength
-      ]
+      ],
+      isSigningIn: false
     }
   },
   methods: {
     signIn () {
       if (this.$refs.form.validate()) {
+        this.isSigningIn = true
+
         this.$store.dispatch('user/signIn', {
           email: this.email,
           password: this.password
         })
         .then(() => {
+          this.isSigningIn = false
           $nuxt.$router.push({ name: 'index' })
         })
         .catch(err => {
+          this.isSigningIn = false
           this.showNotification(err.code, 'error')
         })
       }
