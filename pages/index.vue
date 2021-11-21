@@ -49,6 +49,7 @@
                       depressed
                       color="teal darken-1"
                       class="ml-2"
+                      @click="logAllRequests"
                     >
                       <v-icon>mdi-magnify</v-icon>
                     </v-btn>
@@ -110,26 +111,48 @@
             </v-col>
           </v-row>
         </v-container>
+
+        <v-container fluid>
+          <v-row>
+            <v-col cols="12" class="px-2">
+              <v-pagination
+                v-model="page"
+                color="teal darken-1"
+                :length="100"
+                :total-visible="7"
+              ></v-pagination>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { requestAPI } from '~/api/request'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   middleware: 'auth',
   layout: 'appbar',
   data () {
     return {
-      count: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      page: 1
     }
   },
+  computed: {
+    ...mapState({
+      requestList: state => state.request.list,
+    }),
+    ...mapGetters({
+      paginatedRequestList: 'request/paginatedRequestList'
+    })
+  },
   methods: {
-    async getAllPendingRequests () {
-      const pendingRequests = await requestAPI.getAllPendingRequests()
-      console.log(pendingRequests)
+    async logAllRequests () {
+      await this.$store.dispatch('request/getRequests') 
+      console.log(this.paginatedRequestList)
     }
   }
 }
