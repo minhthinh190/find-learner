@@ -36,6 +36,11 @@ export const actions = {
     commit('setList', requestList)
   },
 
+  async filterRequests ({ commit }, queryFields) {
+    const requestList = await requestAPI.filterAllPendingRequests(queryFields)
+    commit('setList', requestList)
+  },
+
   paginateRequestList ({ state, commit }) {
     const paginatedRequestList = state.list.reduce((resultArray, item, index) => {
       const pageIndex = Math.floor(index / state.perPage)
