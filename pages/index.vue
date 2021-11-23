@@ -15,8 +15,10 @@
         <v-container fluid class="px-2 py-0">
           <v-sheet class="px-5 py-4">
             <v-row justify="space-between">
-              <v-col cols="2" class="px-2 py-0">
+              <!-- Filter -->
+              <v-col cols="12" lg="2" sm="3" class="px-2 py-0">
                 <v-select
+                  v-model="subject"
                   label="Subject"
                   color="teal darken-1"
                   background-color="grey lighten-4"
@@ -29,7 +31,8 @@
                 ></v-select>
               </v-col>
 
-              <v-col cols="4" class="px-2">
+              <!-- Search Bar -->
+              <v-col cols="12" lg="4" md="4" sm="6" class="px-2">
                 <v-container class="pa-0 d-flex">
                   <v-text-field
                     label="Find by ID"
@@ -64,7 +67,11 @@
             <v-col
               v-for="(request, index) in paginatedRequests[page - 1]"
               :key="index"
-              cols="3"
+              cols="12"
+              lg="3"
+              md="4"
+              sm="6"
+              xs="12"
               class="pa-2"
             >
               <v-card tile elevation="0">
@@ -161,13 +168,19 @@ export default {
         'TOEIC'
       ],
       page: 1,
-      isLoading: false
+      isLoading: false,
+      subject: null
     }
   },
   computed: {
     ...mapGetters({
       paginatedRequests: 'request/paginatedRequestList'
     })
+  },
+  watch: {
+    subject (val) {
+      console.log(val)
+    }
   },
   async mounted () {
     this.showLoader()
