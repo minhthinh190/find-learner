@@ -9,7 +9,7 @@
       <v-card-text>
         <v-row class="py-4">
           <v-col cols="4">
-            <h2 class="mb-4">Find Tutor</h2>
+            <h2 class="mb-4">Find Learner</h2>
             <p>
               Dribbble is the world’s leading community for creatives to share, grow, and get hired.
               Lorem ipsum dolor sit amet lorem ipsum dolor sit amet.
@@ -20,6 +20,7 @@
             <p class="ma-0">Email: help@findtutor.com</p>
           </v-col>
 
+          <!--
           <v-col cols="2">
             <h3 class="mb-2">Lorem 1</h3>
 
@@ -111,6 +112,7 @@
               </p>
             </div>
           </v-col>
+          -->
         </v-row>
       </v-card-text>
 
@@ -135,6 +137,7 @@
 export default {
   data () {
     return {
+      /*
       primarySubjects: [
         {
           name: 'Math',
@@ -194,6 +197,7 @@ export default {
         }
       ],
       english: ['IELTS', 'TOEIC', 'TOEFL', 'VSTEP']
+      */
     }
   }
 }

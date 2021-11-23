@@ -20,17 +20,6 @@
 
               <v-spacer class="py-1" />
 
-              <!--
-              <v-text-field
-                v-model="username"
-                label="Username"
-                color="teal accent-4"
-                dense
-                outlined
-                :rules="usernameRules"
-              ></v-text-field>
-              -->
-
               <v-text-field
                 v-model="password"
                 label="Password"
@@ -67,6 +56,7 @@
                   color="teal darken-1"
                   depressed
                   block
+                  :loading="isSigningUp"
                   class="py-5 text-capitalize white--text"
                   @click="signUp"
                 >
@@ -102,14 +92,6 @@ export default {
         val => !!val.trim() || msg.auth.emailRequired,
         val => (val.trim() && regex.email.test(val)) || msg.auth.invalidEmailFormat
       ],
-      /*
-      username: '',
-      usernameRules: [
-        val => !!val.trim() || msg.auth.nameRequired,
-        val => (val.trim() && val.length >=3 && val.length <= 40) || msg.auth.invalidNameLength,
-        val => (val.trim() && regex.username.test(val)) || msg.auth.invalidNameFormat
-      ],
-      */
       password: '',
       isPwShowed: false,
       passwordRules: [
@@ -122,7 +104,8 @@ export default {
         val => !!val || msg.auth.confirmPwRequired,
         val => (val && val.length > 6) || msg.auth.invalidPwLength,
         val => (val && val === this.password) || msg.auth.pwNotMatch
-      ]
+      ],
+      isSigningUp: false
     }
   },
   watch: {
@@ -133,14 +116,18 @@ export default {
   methods: {
     signUp () {
       if (this.$refs.form.validate()) {
+        this.isSigningUp = true
+
         this.$store.dispatch('user/signUp', {
           email: this.email,
           password: this.password
         })
         .then(() => {
-          $nuxt.$router.push({ name: 'index' })
+          this.isSigningUp = false
+          $nuxt.$router.push({ name: 'update-profile' })
         })
         .catch(err => {
+          this.isSigningUp = false
           this.showNotification(err.code, 'error')
         })
       }
