@@ -63,7 +63,7 @@
 
         <!-- Request Card Container -->
         <v-container fluid>
-          <v-row v-if="paginatedRequests.length">
+          <v-row v-if="!isLoading && paginatedRequests.length">
             <v-col
               v-for="(request, index) in paginatedRequests[page - 1]"
               :key="index"
@@ -117,9 +117,26 @@
               </v-card>
             </v-col>
           </v-row>
+        </v-container>
 
-          <v-row v-else class="pa-16">
-            <v-col cols="12" class="text-center my-16 pa-16">
+        <!-- Pagination -->
+        <v-container fluid v-if="!isLoading && paginatedRequests.length">
+          <v-row>
+            <v-col cols="12" class="px-2">
+              <v-pagination
+                v-model="page"
+                color="teal darken-1"
+                :length="paginatedRequests.length"
+                :total-visible="7"
+              ></v-pagination>
+            </v-col>
+          </v-row>
+        </v-container>
+
+        <!-- Loader -->
+        <v-container fluid v-if="isLoading">
+          <v-row class="pa-lg-16 pa-md-10">
+            <v-col cols="12" class="text-center my-lg-10 pa-16">
               <v-progress-circular
                 :size="50"
                 :width="5"
@@ -130,16 +147,11 @@
           </v-row>
         </v-container>
 
-        <!-- Pagination -->
-        <v-container fluid v-if="paginatedRequests.length">
-          <v-row>
-            <v-col cols="12" class="px-2">
-              <v-pagination
-                v-model="page"
-                color="teal darken-1"
-                :length="paginatedRequests.length"
-                :total-visible="7"
-              ></v-pagination>
+        <!-- No Requests Announcement -->
+        <v-container fluid v-if="!isLoading && !paginatedRequests.length">
+          <v-row class="pa-lg-16 pa-md-10">
+            <v-col cols="12" class="text-center my-lg-10 pa-16">
+              <h2>No requests</h2>
             </v-col>
           </v-row>
         </v-container>
@@ -169,7 +181,7 @@ export default {
       ],
       page: 1,
       isLoading: false,
-      subject: null
+      subject: 'All'
     }
   },
   computed: {
@@ -178,13 +190,22 @@ export default {
     })
   },
   watch: {
-    subject (val) {
-      console.log(val)
+    async subject (val) {
+      this.showLoader()
+      await this.$store.dispatch('request/filterRequests', { subject: val })
+      this.hideLoader()
+      this.$store.dispatch('request/paginateRequestList')
+    },
+    page () {
+      this.showLoader()
+      setTimeout(() => {
+        this.hideLoader()
+      }, 500)
     }
   },
   async mounted () {
     this.showLoader()
-    await this.$store.dispatch('request/getRequests')
+    await this.$store.dispatch('request/filterRequests', { subject: this.subject })
     this.hideLoader()
     this.$store.dispatch('request/paginateRequestList')
   },
