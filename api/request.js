@@ -44,7 +44,7 @@ const filterUserPendingRequests = async (userDoc, queryFields) => {
   const queryRef = collection(db, _rootCollection, userDoc, _collection)
   let q = null
 
-  if (queryFields.subject === 'All') {
+  if (queryFields.subject === 'all') {
     q = query(
       queryRef,
       where('status', '==', 'waiting')
