@@ -78,7 +78,7 @@
                 <v-card-subtitle class="py-2">
                   <div class="d-flex justify-space-between">
                     <p class="ma-0 request-id">
-                      <strong>1002</strong>
+                      <strong>{{ request.id }}</strong>
                     </p>
                     <p class="ma-0">{{ request.createdDate }}</p>
                   </div>
@@ -88,7 +88,7 @@
 
                 <v-card-text class="py-3 card-text">
                   <p class="ma-0">
-                    <strong>Subject: </strong>{{ request.subject }}
+                    <strong>Subject: </strong>{{ capitalizeFirstLetter(request.subject) }}
                   </p>
                   <v-spacer class="mb-2"/>
                   <p class="ma-0">
@@ -190,11 +190,8 @@ export default {
     })
   },
   watch: {
-    async subject (val) {
-      this.showLoader()
-      await this.$store.dispatch('request/filterRequests', { subject: val })
-      this.hideLoader()
-      this.$store.dispatch('request/paginateRequestList')
+    subject (val) {
+      this.filterRequestsBySubject(val)
     },
     page () {
       this.showLoader()
@@ -203,19 +200,30 @@ export default {
       }, 500)
     }
   },
-  async mounted () {
-    this.showLoader()
-    await this.$store.dispatch('request/filterRequests', { subject: this.subject })
-    this.hideLoader()
-    this.$store.dispatch('request/paginateRequestList')
+  mounted () {
+    this.filterRequestsBySubject(this.subject)
   },
   methods: {
+    async filterRequestsBySubject (subject) {
+      this.showLoader()
+      await this.$store.dispatch('request/filterRequests', {
+        subject: subject.toLowerCase()
+      })
+      this.hideLoader()
+
+      this.$store.dispatch('request/paginateRequestList')
+    },
+
     showLoader () {
       this.isLoading = true
     },
 
     hideLoader () {
       this.isLoading = false
+    },
+
+    capitalizeFirstLetter (str) {
+      return str.charAt(0).toUpperCase() + str.slice(1)
     }
   }
 }
