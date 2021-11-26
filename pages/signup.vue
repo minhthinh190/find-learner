@@ -1,4 +1,5 @@
 <template>
+  <!--
   <v-container fill-height>
     <v-row justify="center">
       <v-col cols="12" sm="6" md="6" lg="4">
@@ -15,6 +16,7 @@
                 color="teal accent-4"
                 dense
                 outlined
+                single-line
                 :rules="emailRules"
               ></v-text-field>
 
@@ -26,6 +28,7 @@
                 color="teal accent-4"
                 dense
                 outlined
+                single-line
                 :type="isPwShowed ? 'text' : 'password'"
                 :append-icon="isPwShowed ? 'mdi-eye' : 'mdi-eye-off'"
                 :rules="passwordRules"
@@ -78,6 +81,385 @@
       </v-col>
     </v-row>
   </v-container>
+  -->
+  <v-container fluid class="pa-16">
+    <v-sheet class="mx-16 px-14 py-7">
+      <v-row>
+        <v-col cols="12">
+          <h2 class="text-center">Register Form</h2>
+        </v-col>
+      </v-row>
+
+      <v-divider class="my-4"/>
+
+      <!-- Personal Info -->
+      <v-row>
+        <v-col cols="12">
+          <h3>Personal Info</h3>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2">
+          <p>Name</p>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            dense
+            outlined
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2" class="pb-0 ">
+          <p>Gender</p>
+        </v-col>
+        <v-col cols="3" class="pb-0 ">
+          <v-radio-group row class="pa-0 ma-0">
+            <v-radio
+              label="Male"
+              value="male"
+            ></v-radio>
+            <v-radio
+              label="Female"
+              value="female"
+            ></v-radio>
+          </v-radio-group>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2">
+          <p>Phone number</p>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            dense
+            outlined
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2">
+          <p>Date of Birth</p>
+        </v-col>
+
+        <v-col cols="1">
+          <v-text-field
+            dense
+            outlined
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="1">
+          <v-text-field
+            dense
+            outlined
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="1">
+          <v-text-field
+            dense
+            outlined
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2">
+          <p>Hometown</p>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            dense
+            outlined
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <!-- Job Title -->
+      <v-row>
+        <v-col cols="12">
+          <h3>Job Title</h3>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2" class="pb-0 ">
+          <p>Current job</p>
+        </v-col>
+        <v-col cols="5" class="pb-0 ">
+          <v-radio-group row class="pa-0 ma-0">
+            <v-radio
+              label="Undergraduate"
+              value="undergraduate"
+            ></v-radio>
+            <v-radio
+              label="Graduated"
+              value="graduated"
+            ></v-radio>
+            <v-radio
+              label="Teacher"
+              value="teacher"
+            ></v-radio>
+          </v-radio-group>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2">
+          <p>School/University</p>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            dense
+            outlined
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2">
+          <p>Faculty</p>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            dense
+            outlined
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <!-- Self-introduction -->
+      <v-row>
+        <v-col cols="12">
+          <h3>Self-introduction</h3>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2">
+          <p>Self-introduction</p>
+        </v-col>
+        <v-col cols="6">
+          <v-textarea
+            outlined
+          ></v-textarea>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2">
+          <p>Teaching experiences</p>
+        </v-col>
+        <v-col cols="6">
+          <v-textarea
+            outlined
+          ></v-textarea>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2">
+          <p>Achievements</p>
+        </v-col>
+        <v-col cols="4">
+          <v-text-field
+            dense
+            outlined
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <!-- Services -->
+      <v-row>
+        <v-col cols="12">
+          <h3>Services</h3>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2" class="pb-0 ">
+          <p>Format</p>
+        </v-col>
+        <v-col cols="5" class="pb-0 ">
+          <v-radio-group row class="pa-0 ma-0">
+            <v-radio
+              label="Offline"
+              value="offline"
+            ></v-radio>
+            <v-radio
+              label="Online"
+              value="online"
+            ></v-radio>
+            <v-radio
+              label="Both"
+              value="both"
+            ></v-radio>
+          </v-radio-group>
+        </v-col>
+      </v-row>
+
+      <v-row class="pb-4 ">
+        <v-col cols="2" class="pb-0">
+          <p>Time</p>
+        </v-col>
+        <v-col cols="6" class="pb-0">
+          <v-data-table
+            :headers="timeTableHeaders"
+            :items="timeTableData"
+            dense
+            hide-default-footer
+          >
+            <template v-slot:item.morning="{ item }">
+              <v-checkbox
+                hide-details
+                class="ma-0"
+              ></v-checkbox>
+            </template>
+            <template v-slot:item.afternoon="{ item }">
+              <v-checkbox
+                hide-details
+                class="ma-0"
+              ></v-checkbox>
+            </template>
+            <template v-slot:item.evening="{ item }">
+              <v-checkbox
+                hide-details
+                class="ma-0"
+              ></v-checkbox>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
+
+      <v-row class="pb-4">
+        <v-col cols="2" class="pb-0">
+          <p>Fee table</p>
+        </v-col>
+        <v-col cols="6" class="pb-0">
+          <v-data-table
+            :headers="feeTableHeaders"
+            :items="feeTableData"
+            hide-default-footer
+          >
+            <template v-slot:item.subject="{ item }">
+              <v-text-field
+                dense
+                outlined
+                single-line
+                hide-details
+              ></v-text-field>
+            </template>
+            <template v-slot:item.level="{ item }">
+              <v-text-field
+                dense
+                outlined
+                single-line
+                hide-details
+              ></v-text-field>
+            </template>
+            <template v-slot:item.fee="{ item }">
+              <v-text-field
+                dense
+                outlined
+                single-line
+                hide-details
+              ></v-text-field>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
+
+      <!-- Account -->
+      <v-row>
+        <v-col cols="12">
+          <h3>Account</h3>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2">
+          <p>Email</p>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            dense
+            outlined
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2">
+          <p>Password</p>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            dense
+            outlined
+            single-line
+            hide-details
+            :type="isPwShowed ? 'text' : 'password'"
+            :append-icon="isPwShowed ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="isPwShowed = !isPwShowed"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="2">
+          <p>Confirm password</p>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            dense
+            outlined
+            single-line
+            hide-details
+            :type="isCfPwShowed ? 'text' : 'password'"
+            :append-icon="isCfPwShowed ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="isCfPwShowed = !isCfPwShowed"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" class="text-right">
+          <v-btn
+            color="teal darken-1"
+            depressed
+            class="pa-5 white--text"
+          >
+            Sign Up
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-sheet>
+  </v-container>
 </template>
 
 <script>
@@ -105,7 +487,37 @@ export default {
         val => (val && val.length > 6) || msg.auth.invalidPwLength,
         val => (val && val === this.password) || msg.auth.pwNotMatch
       ],
-      isSigningUp: false
+      isSigningUp: false,
+      timeTableHeaders: [
+        { text: 'Weekday', value: 'weekday', align: '', sortable: false },
+        { text: 'Morning', value: 'morning', align: '', sortable: false },
+        { text: 'Afternoon', value: 'afternoon', align: '', sortable: false },
+        { text: 'Evening', value: 'evening', align: '', sortable: false }
+      ],
+      timeTableData: [
+        { weekday: 'Monday', morning: '', afternoon: '', evening: '' },
+        { weekday: 'Tuesday', morning: '', afternoon: '', evening: '' },
+        { weekday: 'Wednesday', morning: '', afternoon: '', evening: '' },
+        { weekday: 'Thursday', morning: '', afternoon: '', evening: '' },
+        { weekday: 'Friday', morning: '', afternoon: '', evening: '' },
+        { weekday: 'Saturday', morning: '', afternoon: '', evening: '' },
+        { weekday: 'Sunday', morning: '', afternoon: '', evening: '' }
+      ],
+      feeTableHeaders: [
+        { text: 'Subject', value: 'subject', align: '', sortable: false },
+        { text: 'Level', value: 'level', align: '', sortable: false },
+        { text: 'Fee/session (VND)', value: 'fee', align: '', sortable: false }
+      ],
+      feeTableData: [
+        { subject: '', level: '', fee: '' },
+        { subject: '', level: '', fee: '' },
+        { subject: '', level: '', fee: '' },
+        { subject: '', level: '', fee: '' },
+        { subject: '', level: '', fee: '' },
+        { subject: '', level: '', fee: '' },
+        { subject: '', level: '', fee: '' },
+        { subject: '', level: '', fee: '' }
+      ]
     }
   },
   watch: {
@@ -144,8 +556,11 @@ export default {
 </script>
 
 <style scoped>
+. {
+  border: 1px solid red;
+}
 .container {
-  height: 95vh;
+  background: #F5F5F5;
 }
 .link {
   text-decoration: none;
@@ -153,5 +568,8 @@ export default {
 }
 .link:hover {
   filter: brightness(70%);
+}
+p {
+  margin: 0;
 }
 </style>
