@@ -335,7 +335,7 @@
           <v-col cols="12" md="10" class="py-0">
             <v-data-table
               :headers="feeTableHeaders"
-              :items="feeTableData"
+              :items="services.fee"
               hide-default-footer
             >
               <template v-slot:item.subject="{ item }">
@@ -453,6 +453,7 @@
             <v-btn
               color="teal darken-1"
               depressed
+              :loading="isSigningUp"
               class="pa-5 white--text"
               @click="signUp"
             >
@@ -469,6 +470,7 @@
 import regex from '~/util/regex.js'
 import msg from '~/util/message.js'
 import { helper } from '~/util/helpers.js'
+import { tutorAPI } from '~/api/tutor'
 
 export default {
   data () {
@@ -531,16 +533,6 @@ export default {
         { text: 'Level', value: 'level', align: '', sortable: false },
         { text: 'Fee/session (VND)', value: 'fee', align: '', sortable: false }
       ],
-      feeTableData: [
-        { subject: '', level: [], fee: '' },
-        { subject: '', level: [], fee: '' },
-        { subject: '', level: [], fee: '' },
-        { subject: '', level: [], fee: '' },
-        { subject: '', level: [], fee: '' },
-        { subject: '', level: [], fee: '' },
-        { subject: '', level: [], fee: '' },
-        { subject: '', level: [], fee: '' }
-      ],
       /* Tutor Info State */
       // Personal Info
       personalInfo: {
@@ -558,7 +550,7 @@ export default {
         school: '',
         faculty: ''
       },
-      // Self-introduction State
+      // Self-introduction
       selfIntroduction: {
         selfIntroduction: '',
         teachingExperiences: '',
@@ -575,6 +567,16 @@ export default {
           { weekday: 'Friday', morning: false, afternoon: false, evening: false },
           { weekday: 'Saturday', morning: false, afternoon: false, evening: false },
           { weekday: 'Sunday', morning: false, afternoon: false, evening: false }
+        ],
+        fee: [
+          { subject: '', level: [], fee: '' },
+          { subject: '', level: [], fee: '' },
+          { subject: '', level: [], fee: '' },
+          { subject: '', level: [], fee: '' },
+          { subject: '', level: [], fee: '' },
+          { subject: '', level: [], fee: '' },
+          { subject: '', level: [], fee: '' },
+          { subject: '', level: [], fee: '' }
         ]
       },
       // Account
@@ -591,25 +593,53 @@ export default {
     }
   },
   methods: {
-    signUp () {
-      console.log(this.feeTableData)
+    async signUp () {
       if (this.$refs.form.validate()) {
-        /*
         this.isSigningUp = true
 
-        this.$store.dispatch('user/signUp', {
-          email: this.email,
-          password: this.password
+        const tutorProfile = {
+          // Personal Info
+          name: this.personalInfo.name,
+          gender: this.personalInfo.gender,
+          phone: this.personalInfo.phone,
+          birthDate: this.personalInfo.birthDate,
+          birthMonth: this.personalInfo.birthMonth,
+          birthYear: this.personalInfo.birthYear,
+          // Job Title
+          currentJob: this.jobTitle.currentJob,
+          school: this.jobTitle.school,
+          faculty: this.jobTitle.faculty,
+          // Self-introduction
+          selfIntroduction: this.selfIntroduction.selfIntroduction,
+          teachingExperiences: this.selfIntroduction.teachingExperiences,
+          achievement: this.selfIntroduction.achievement,
+          // Services
+          format: this.services.format,
+          freeTime: this.services.freeTime,
+          fee: this.services.fee,
+          // Account
+          email: this.account.email
+        }
+
+        // Create new account
+        await this.$store.dispatch('user/signUp', {
+          email: this.account.email,
+          password: this.account.password
+        })
+
+        // Create tutor profile
+        tutorAPI.updateTutorProfile(this.account.email, {
+          ...tutorProfile
         })
         .then(() => {
           this.isSigningUp = false
-          $nuxt.$router.push({ name: 'update-profile' })
+          this.$refs.form.reset()
+          $nuxt.$router.push({ name: 'index' })
         })
         .catch(err => {
           this.isSigningUp = false
           this.showNotification(err.code, 'error')
         })
-        */
       }
     },
 
