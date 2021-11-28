@@ -1,9 +1,10 @@
 import { requestAPI } from '~/api/request'
 
 export const state = () => ({
-  list: null,
   perPage: 12,
-  paginatedRequestList: []
+  list: null,
+  paginatedRequestList: [],
+  request: null
 })
 
 export const getters = {
@@ -27,6 +28,10 @@ export const mutations = {
 
   setPaginatedRequestList (state, paginatedRequestList) {
     state.paginatedRequestList = paginatedRequestList
+  },
+
+  setRequest (state, request) {
+    state.request = request
   }
 }
 
@@ -52,5 +57,12 @@ export const actions = {
       return resultArray
     }, [])
     commit('setPaginatedRequestList', paginatedRequestList)
+  },
+
+  async getRequestById ({ commit }, { userEmail, id }) {
+    const requestList = await requestAPI.queryRequestByProperty(
+      userEmail, 'id', id
+    )
+    commit('setRequest', requestList[0])
   }
 }
