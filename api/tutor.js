@@ -33,6 +33,14 @@ const increaseTutorIdCounter = async () => {
 }
 
 // Public API
+const getTutorProfile = async (tutorDoc) => {
+  const docRef = doc(db, _rootCollection, tutorDoc)
+  const res = await getDoc(docRef)
+  const tutorProfile = res.data()
+
+  return tutorProfile
+}
+
 const updateTutorProfile = async (tutorDoc, tutorProfile) => {
   const tutorIdCounter = await getTutorIdCounter()
   const docRef = doc(db, _rootCollection, tutorDoc)
@@ -44,5 +52,6 @@ const updateTutorProfile = async (tutorDoc, tutorProfile) => {
 }
 
 export const tutorAPI = {
+  getTutorProfile,
   updateTutorProfile
 }
