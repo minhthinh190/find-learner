@@ -15,6 +15,7 @@
                 color="teal accent-4"
                 dense
                 outlined
+                single-line
                 :rules="emailRules"
               ></v-text-field>
 
@@ -26,6 +27,7 @@
                 color="teal accent-4"
                 dense
                 outlined
+                single-line
                 :type="isPwShowed ? 'text' : 'password'"
                 :append-icon="isPwShowed ? 'mdi-eye' : 'mdi-eye-off'"
                 :rules="passwordRules"

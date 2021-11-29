@@ -44,7 +44,7 @@ const filterUserPendingRequests = async (userDoc, queryFields) => {
   const queryRef = collection(db, _rootCollection, userDoc, _collection)
   let q = null
 
-  if (queryFields.subject === 'All') {
+  if (queryFields.subject === 'all') {
     q = query(
       queryRef,
       where('status', '==', 'waiting')
@@ -87,7 +87,21 @@ const filterAllPendingRequests = async (queryFields) => {
   return allPendingRequests
 }
 
+const queryRequestByProperty = async (userDoc, property, value) => {
+  const queryRef = collection(db, _rootCollection, userDoc, _collection)
+  const q = query(queryRef, where(property, '==', value))
+
+  const querySnapshot = await getDocs(q)
+  const requestList = []
+
+  querySnapshot.forEach((doc) => {
+    requestList.push(doc.data())
+  })
+  return requestList
+}
+
 export const requestAPI = {
   getAllPendingRequests,
-  filterAllPendingRequests
+  filterAllPendingRequests,
+  queryRequestByProperty
 }

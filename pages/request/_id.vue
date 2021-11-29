@@ -105,13 +105,14 @@
                 :headers="headers"
                 :items="generateDetailsTableData()"
                 hide-default-footer
+                class="v-table--custom"
               ></v-data-table>
             </v-col>
           </v-row>
 
           <v-row class="mb-4">
             <v-col cols="12">
-              <v-card elevation="0">
+              <v-card flat tile>
                 <div class="px-4 pt-4 pb-0">
                   <p class="ma-0 font-weight-bold">
                     Description
@@ -200,11 +201,11 @@ export default {
     generateDetailsTableData () {
       const data = [
         {
-          subject: this.booking.subject,
+          subject: this.capitalizeFirstLetter(this.booking.subject),
           format: this.booking.format,
           time: this.booking.time,
           perWeek: this.booking.perWeek,
-          duration: this.booking.duration
+          duration: this.booking.duration + ' (mins)'
         }
       ]
       return data
@@ -241,11 +242,24 @@ export default {
   color: #757575;
   text-decoration: none;
 }
-.v-sheet--custom {
-  border-radius: 5px;
-}
 .created-date {
   font-weight: normal;
   color: #757575;
+}
+</style>
+
+<style>
+.v-table--custom thead tr {
+  background: white;
+}
+.v-table--custom thead th {
+  font-size: 15px !important;
+  color: #000000 !important;
+}
+.v-table--custom tbody tr {
+  background: white;
+}
+.v-table--custom tbody tr:hover {
+  background: transparent !important;
 }
 </style>
