@@ -1,6 +1,6 @@
 <template>
   <v-container
-    v-if="booking"
+    v-if="request"
     fluid
     class="py-7 pa-sm-16 root-container"
   >
@@ -19,7 +19,7 @@
               color="grey lighten-2"
             ></v-avatar>
 
-            <h4 class="ml-3">Username</h4>
+            <h4 class="ml-3">{{ tutor ? tutor.name : '' }}</h4>
           </v-card-title>
           
           <div class="px-4 py-2 nav-item">
@@ -57,13 +57,13 @@
                 outlined
                 small
               >
-                {{ capitalizeFirstLetter(booking.status) }}
+                {{ capitalizeFirstLetter(request.status) }}
               </v-chip>
             </v-col>
 
             <v-col cols="6">
               <p class="ma-0 text-right subtitle-2 created-date">
-                Created date: {{ booking.createdDate }}
+                Created date: {{ request.createdDate }}
               </p>
             </v-col>
           </v-row>
@@ -81,14 +81,14 @@
                   </span>
 
                   <nuxt-link
-                    v-for="(tutor, index) in booking.tutors"
+                    v-for="(tutor, index) in request.tutors"
                     :key="index"
                     to=""
                     class="link"
                   >
                     {{ tutor }}
                     <span
-                      v-if="index !== booking.tutors.length - 1"
+                      v-if="index !== request.tutors.length - 1"
                       class="comma"
                     >
                       ,&nbsp;
@@ -120,7 +120,7 @@
                 </div>
 
                 <v-card-text class="pt-2">
-                  {{ booking.description }}
+                  {{ request.description }}
                 </v-card-text>
               </v-card>
             </v-col>
@@ -137,13 +137,13 @@
                   <span class="font-weight-bold">
                     Address:&nbsp;
                   </span>
-                  {{ booking.address }}
+                  {{ request.address }}
                 </p>
               </v-sheet>
             </v-col>
           </v-row>
 
-          <v-row>
+          <v-row class="mb-4">
             <v-col cols="12">
               <v-sheet
                 color="white"
@@ -154,11 +154,29 @@
                   <span class="font-weight-bold">
                     Contact:&nbsp;
                   </span>
-                  {{ booking.contact }}
+                  {{ request.contact }}
                 </p>
               </v-sheet>
             </v-col>
           </v-row>
+
+          <v-row>
+            <v-col cols="12" class="text-right">
+              <v-btn
+                color="teal darken-1"
+                depressed
+                class="px-6 text-capitalize white--text"
+                @click.stop="isDialogShowed = true"
+              >
+                Apply
+              </v-btn>
+            </v-col>
+          </v-row>
+
+          <confirm-dialog
+            :isDialogShowed="isDialogShowed"
+            v-on:close-dialog="isDialogShowed = false"
+          />
         </v-container>
       </v-col>
     </v-row>
@@ -167,12 +185,17 @@
 
 <script>
 import { mapState } from 'vuex'
+import ConfirmDialog from '~/components/ConfirmDialog'
 
 export default {
   middleware: 'auth',
   layout: 'appbar',
+  components: {
+    ConfirmDialog
+  },
   data () {
     return {
+      isDialogShowed: false,
       headers: [
         { text: 'Subject', value: 'subject', align: 'start', sortable: false },
         { text: 'Format', value: 'format', align: 'start', sortable: false },
@@ -183,16 +206,26 @@ export default {
     }
   },
   computed: {
-    bookingId () {
+    requestId () {
       return this.$route.params.id
     },
+    requestOwner () {
+      return this.$route.params.owner
+    },
     ...mapState({
-      booking: state => state.booking.booking
+      tutor: state => state.user.profile,
+      request: state => state.request.request
     }),
   },
   created () {
-    const id = this.bookingId
-    this.$store.dispatch('booking/getBookingById', { id })
+    const id = this.requestId
+    const userEmail = this.requestOwner
+
+    this.$store.dispatch('request/getRequestById', {
+      userEmail,
+      id
+    })
+    this.$store.dispatch('user/getUserProfile')
   },
   methods: {
     capitalizeFirstLetter (str) {
@@ -201,11 +234,11 @@ export default {
     generateDetailsTableData () {
       const data = [
         {
-          subject: this.capitalizeFirstLetter(this.booking.subject),
-          format: this.booking.format,
-          time: this.booking.time,
-          perWeek: this.booking.perWeek,
-          duration: this.booking.duration + ' (mins)'
+          subject: this.capitalizeFirstLetter(this.request.subject),
+          format: this.request.format,
+          time: this.request.time,
+          perWeek: this.request.perWeek,
+          duration: this.request.duration + ' (mins)'
         }
       ]
       return data
