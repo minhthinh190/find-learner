@@ -4,7 +4,10 @@ import { initializeApp } from 'firebase/app'
 import {
   getFirestore,
   collection,
+  doc,
+  getDoc,
   getDocs,
+  updateDoc,
   query,
   where
 } from 'firebase/firestore'
@@ -87,6 +90,24 @@ const filterAllPendingRequests = async (queryFields) => {
   return allPendingRequests
 }
 
+const updateTutorDataOfRequest = async (userDoc, requestId, tutorData) => {
+  const docRef = doc(
+    db,
+    _rootCollection,
+    userDoc,
+    _collection,
+    requestId.toString()
+  )
+
+  const res = await getDoc(docRef)
+  const tutorList = res.data().tutors
+  tutorList.push({ ...tutorData })
+
+  return updateDoc(docRef, {
+    tutors: tutorList
+  })
+}
+
 const queryRequestByProperty = async (userDoc, property, value) => {
   const queryRef = collection(db, _rootCollection, userDoc, _collection)
   const q = query(queryRef, where(property, '==', value))
@@ -103,5 +124,6 @@ const queryRequestByProperty = async (userDoc, property, value) => {
 export const requestAPI = {
   getAllPendingRequests,
   filterAllPendingRequests,
-  queryRequestByProperty
+  queryRequestByProperty,
+  updateTutorDataOfRequest
 }
