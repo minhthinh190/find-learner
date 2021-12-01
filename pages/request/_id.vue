@@ -175,8 +175,22 @@
 
           <confirm-dialog
             :isDialogShowed="isDialogShowed"
+            :isConfirming="isApplying"
             v-on:close-dialog="isDialogShowed = false"
-          />
+            v-on:confirm="applyForRequest"
+          >
+            <template #dialogTitle>
+              Applying Confirmation
+            </template>
+
+            <template #dialogContent>
+              Are you sure to apply this request?
+            </template>
+
+            <template #confirmBtnText>
+              Apply
+            </template>
+          </confirm-dialog>
         </v-container>
       </v-col>
     </v-row>
@@ -185,6 +199,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { requestAPI } from '~/api/request'
 import ConfirmDialog from '~/components/ConfirmDialog'
 
 export default {
@@ -196,6 +211,7 @@ export default {
   data () {
     return {
       isDialogShowed: false,
+      isApplying: false,
       headers: [
         { text: 'Subject', value: 'subject', align: 'start', sortable: false },
         { text: 'Format', value: 'format', align: 'start', sortable: false },
@@ -242,15 +258,34 @@ export default {
         }
       ]
       return data
+    },
+    applyForRequest () {
+      this.isApplying = true
+
+      const tutorData = {
+        email: this.tutor.email,
+        status: 'applying'
+      }
+      requestAPI.updateTutorDataOfRequest(
+        this.requestOwner,
+        this.requestId,
+        tutorData
+      )
+        .then(() => {
+          this.isDialogShowed = false
+          this.isApplying = false
+        })
+        .catch((err) => {
+          this.isDialogShowed = false
+          this.isApplying = false
+          console.log(err)
+        })
     }
   }
 }
 </script>
 
 <style scoped>
-.box {
-  border: 1px solid red;
-}
 .col {
   padding: 0;
 }
