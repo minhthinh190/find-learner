@@ -6,11 +6,15 @@
   >
     <v-card>
       <v-card-title class="px-4">
-        <h5>Dialog Title</h5>
+        <h5>
+          <slot name="dialogTitle">Dialog Title</slot>
+        </h5>
       </v-card-title>
 
       <v-card-text class="px-4">
-        This is confirm description.
+        <slot name="dialogContent">
+          This is confirm description.
+        </slot>
       </v-card-text>
 
       <v-divider class="mx-4"/>
@@ -22,7 +26,7 @@
           class="px-3 text-capitalize white--text"
           @click="$emit('close-dialog')"
         >
-          Cancel
+          <slot name="cancelBtnText">Cancel</slot>
         </v-btn>
 
         <v-spacer />
@@ -31,8 +35,10 @@
           depressed
           color="teal darken-1"
           class="px-3 text-capitalize white--text"
+          :loading="isConfirming"
+          @click="$emit('confirm')"
         >
-          Confirm
+          <slot name="confirmBtnText">Confirm</slot>
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -43,6 +49,10 @@
 export default {
   props: {
     isDialogShowed: {
+      type: Boolean,
+      required: true
+    },
+    isConfirming: {
       type: Boolean,
       required: true
     }
