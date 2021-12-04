@@ -106,13 +106,21 @@
 
                 <v-card-actions class="px-4">
                   <v-spacer />
-                  <v-btn
-                    text
-                    color="teal darken-1"
-                    class="text-capitalize"
+                  <nuxt-link
+                    :to="{ name: 'request-id', params: {
+                      id: request.id,
+                      owner: request.email
+                    }}"
+                    class="link"
                   >
-                    Details
-                  </v-btn>
+                    <v-btn
+                      text
+                      color="teal darken-1"
+                      class="text-capitalize"
+                    >
+                      Details
+                    </v-btn>
+                  </nuxt-link>
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -238,5 +246,8 @@ export default {
 }
 .card-text {
   font-size: 15px;
+}
+.link {
+  text-decoration: none;
 }
 </style>
