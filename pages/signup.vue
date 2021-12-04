@@ -605,6 +605,7 @@ export default {
           birthDate: this.personalInfo.birthDate,
           birthMonth: this.personalInfo.birthMonth,
           birthYear: this.personalInfo.birthYear,
+          hometown: this.personalInfo.hometown,
           // Job Title
           currentJob: this.jobTitle.currentJob,
           school: this.jobTitle.school,
