@@ -152,8 +152,8 @@
               :rules="numberInputRules"
             >
               <v-radio
-                label="Undergraduate"
-                value="undergraduate"
+                label="Student"
+                value="student"
                 color="teal accent-4"
               ></v-radio>
               <v-radio
@@ -241,14 +241,21 @@
           <v-col cols="2">
             <p class="label">Achievements</p>
           </v-col>
-          <v-col cols="12" md="4" sm="5" class="py-0">
+          <v-col cols="12" md="6" sm="5" class="py-0">
             <v-select
               v-model="selfIntroduction.achievement"
-              dense
               outlined
+              multiple
+              chips
               color="teal accent-4"
               :items="achievementSelectData"
-            ></v-select>
+            >
+              <template v-slot:selection="{ item }">
+                <div class="mr-2 achievement-label">
+                  {{ item }}
+                </div>
+              </template>
+            </v-select>
           </v-col>
         </v-row>
 
@@ -501,7 +508,6 @@ export default {
       //
       achievementSelectData: [
         'Thủ khoa đại học',
-        'Á khoa đại học',
         'Học sinh giỏi Quốc gia',
         'Học sinh giỏi Tỉnh/TP',
         'Huy chương Quốc tế',
@@ -674,6 +680,14 @@ export default {
 }
 .link:hover {
   filter: brightness(70%);
+}
+.achievement-label {
+  width: fit-content;
+  font-size: 13px;
+  font-weight: bold;
+  background: #E0E0E0;
+  color: #263238;
+  padding: 2px 6px;
 }
 p {
   margin: 0;
