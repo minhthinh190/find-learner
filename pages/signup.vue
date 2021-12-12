@@ -560,7 +560,7 @@ export default {
       selfIntroduction: {
         selfIntroduction: '',
         teachingExperiences: '',
-        achievement: ''
+        achievement: []
       },
       // Services
       services: {
