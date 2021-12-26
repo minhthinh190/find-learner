@@ -4,7 +4,7 @@
       <v-form ref="form">
         <v-row>
           <v-col cols="12">
-            <h2 class="text-center">Register Form</h2>
+            <h2 class="text-center">Đăng ký làm gia sư</h2>
           </v-col>
         </v-row>
 
@@ -13,13 +13,13 @@
         <!-- Personal Info -->
         <v-row class="py-3">
           <v-col cols="12">
-            <h3>Personal Info</h3>
+            <h3>Thông tin cá nhân</h3>
           </v-col>
         </v-row>
 
         <v-row>
           <v-col cols="2">
-            <p class="label">Name</p>
+            <p class="label">Họ tên</p>
           </v-col>
           <v-col cols="12" md="3" sm="5" class="py-0">
             <v-text-field
@@ -35,7 +35,7 @@
 
         <v-row class="pb-4">
           <v-col cols="2" class="pb-0">
-            <p class="label">Gender</p>
+            <p class="label">Giới tính</p>
           </v-col>
           <v-col cols="12" md="3" sm="5" class="py-0">
             <v-radio-group
@@ -45,12 +45,12 @@
               :rules="numberInputRules"
             >
               <v-radio
-                label="Male"
+                label="Nam"
                 value="male"
                 color="teal accent-4"
               ></v-radio>
               <v-radio
-                label="Female"
+                label="Nữ"
                 value="female"
                 color="teal accent-4"
               ></v-radio>
@@ -60,7 +60,7 @@
 
         <v-row>
           <v-col cols="2">
-            <p class="label">Phone number</p>
+            <p class="label">Số điện thoại</p>
           </v-col>
           <v-col cols="12" md="3" sm="5" class="py-0">
             <v-text-field
@@ -77,7 +77,7 @@
 
         <v-row>
           <v-col cols="2">
-            <p class="label">Date of Birth</p>
+            <p class="label">Ngày sinh</p>
           </v-col>
 
           <v-col cols="12" lg="2" md="2" sm="3" class="py-0">
@@ -86,7 +86,7 @@
               dense
               outlined
               color="teal accent-4"
-              placeholder="Date"
+              placeholder="Ngày"
               :items="dateSelectData"
               :rules="numberInputRules"
             ></v-select>
@@ -98,7 +98,7 @@
               dense
               outlined
               color="teal accent-4"
-              placeholder="Month"
+              placeholder="Tháng"
               :items="monthSelectData"
               :rules="numberInputRules"
             ></v-select>
@@ -110,7 +110,7 @@
               dense
               outlined
               color="teal accent-4"
-              placeholder="Year"
+              placeholder="Năm"
               :items="yearSelectData"
               :rules="numberInputRules"
             ></v-select>
@@ -119,7 +119,7 @@
 
         <v-row>
           <v-col cols="2">
-            <p class="label">Hometown</p>
+            <p class="label">Quê quán</p>
           </v-col>
           <v-col cols="12" md="3" sm="5" class="py-0">
             <v-text-field
@@ -136,13 +136,13 @@
         <!-- Job Title -->
         <v-row class="py-3">
           <v-col cols="12">
-            <h3>Job Title</h3>
+            <h3>Nghề nghiệp</h3>
           </v-col>
         </v-row>
 
         <v-row class="pb-4">
           <v-col cols="2" class="pb-0">
-            <p class="label">Current job</p>
+            <p class="label">Nghề nghiệp</p>
           </v-col>
           <v-col cols="12" md="6" class="py-0">
             <v-radio-group
@@ -152,17 +152,17 @@
               :rules="numberInputRules"
             >
               <v-radio
-                label="Student"
+                label="Sinh viên"
                 value="student"
                 color="teal accent-4"
               ></v-radio>
               <v-radio
-                label="Graduated"
+                label="Đã tốt nghiệp"
                 value="graduated"
                 color="teal accent-4"
               ></v-radio>
               <v-radio
-                label="Teacher"
+                label="Giáo viên"
                 value="teacher"
                 color="teal accent-4"
               ></v-radio>
@@ -172,7 +172,7 @@
 
         <v-row>
           <v-col cols="2">
-            <p class="label">School/University</p>
+            <p class="label">Trường</p>
           </v-col>
           <v-col cols="12" md="3" sm="5" class="py-0">
             <v-text-field
@@ -188,7 +188,7 @@
 
         <v-row>
           <v-col cols="2">
-            <p class="label">Faculty</p>
+            <p class="label">Khoa/Lớp</p>
           </v-col>
           <v-col cols="12" md="3" sm="5" class="py-0">
             <v-text-field
@@ -205,13 +205,13 @@
         <!-- Self-introduction -->
         <v-row class="py-3">
           <v-col cols="12">
-            <h3>Self-introduction</h3>
+            <h3>Tự giới thiệu</h3>
           </v-col>
         </v-row>
 
         <v-row>
           <v-col cols="2">
-            <p class="label">Self-introduction</p>
+            <p class="label">Tự giới thiệu</p>
           </v-col>
           <v-col cols="12" md="6" class="py-0">
             <v-textarea
@@ -225,7 +225,7 @@
 
         <v-row>
           <v-col cols="2">
-            <p class="label">Teaching experiences</p>
+            <p class="label">Kinh nghiệm dạy học</p>
           </v-col>
           <v-col cols="12" md="6" class="py-0">
             <v-textarea
@@ -239,7 +239,7 @@
 
         <v-row>
           <v-col cols="2">
-            <p class="label">Achievements</p>
+            <p class="label">Đặc điểm nổi bật</p>
           </v-col>
           <v-col cols="12" md="6" sm="5" class="py-0">
             <v-select
@@ -262,13 +262,13 @@
         <!-- Services -->
         <v-row class="py-3">
           <v-col cols="12">
-            <h3>Services</h3>
+            <h3>Thông tin dịch vụ</h3>
           </v-col>
         </v-row>
 
         <v-row class="pb-4">
           <v-col cols="2" class="pb-0 ">
-            <p class="label">Format</p>
+            <p class="label">Hình thức dạy</p>
           </v-col>
           <v-col cols="12" md="5" class="py-0 ">
             <v-radio-group
@@ -288,7 +288,7 @@
                 color="teal accent-4"
               ></v-radio>
               <v-radio
-                label="Both"
+                label="Offline & Online"
                 value="both"
                 color="teal accent-4"
               ></v-radio>
@@ -298,7 +298,7 @@
 
         <v-row class="pb-8">
           <v-col cols="2" class="pb-0">
-            <p class="label">Time</p>
+            <p class="label">Thời gian rảnh</p>
           </v-col>
           <v-col cols="12" lg="6" md="8" sm="10" class="py-0">
             <v-data-table
@@ -337,7 +337,7 @@
 
         <v-row class="pb-4">
           <v-col cols="2" class="pb-0">
-            <p class="label">Fee table</p>
+            <p class="label">Bảng học phí</p>
           </v-col>
           <v-col cols="12" md="10" class="py-0">
             <v-data-table
@@ -352,7 +352,7 @@
                   outlined
                   hide-details
                   color="teal accent-4"
-                  placeholder="Subject"
+                  placeholder="Môn học"
                   :items="subjectSelectData"
                 ></v-select>
               </template>
@@ -364,7 +364,7 @@
                   hide-details
                   multiple
                   color="teal accent-4"
-                  placeholder="Level"
+                  placeholder="Lớp"
                   :items="levelSelectData"
                 ></v-select>
               </template>
@@ -387,7 +387,7 @@
         <!-- Account -->
         <v-row class="py-3">
           <v-col cols="12">
-            <h3>Account</h3>
+            <h3>Tài khoản</h3>
           </v-col>
         </v-row>
 
@@ -410,7 +410,7 @@
 
         <v-row>
           <v-col cols="12" md="2" class="py-0">
-            <p class="label">Password</p>
+            <p class="label">Mật khẩu</p>
           </v-col>
           <v-col cols="12" md="3" sm="5" class="py-0">
             <v-text-field
@@ -429,7 +429,7 @@
 
         <v-row>
           <v-col cols="12" md="2" class="py-0">
-            <p class="ma-0 label">Confirm password</p>
+            <p class="ma-0 label">Nhập lại mật khẩu</p>
           </v-col>
           <v-col cols="12" md="3" sm="5" class="py-0">
             <v-text-field
@@ -450,9 +450,9 @@
         <v-row class="pt-5">
           <v-col cols="12" sm="6">
             <p>
-              Already have an account?
+              Đã có tài khoản?
               <nuxt-link to="/signin" class="link">
-                Sign in
+                Đăng nhập
               </nuxt-link>
             </p>
           </v-col>
@@ -464,7 +464,7 @@
               class="pa-5 white--text"
               @click="signUp"
             >
-              Sign Up
+              Đăng ký làm gia sư
             </v-btn>
           </v-col>
         </v-row>
@@ -517,27 +517,27 @@ export default {
       ],
       //
       subjectSelectData: [
-        'Math',
-        'Physics',
-        'Chemistry',
-        'Biology',
-        'Literature',
-        'English',
+        'Toán',
+        'Vật lý',
+        'Hóa học',
+        'Sinh học',
+        'Ngữ văn',
+        'Tiếng Anh',
         'TOEIC',
         'IELTS'
       ],
       levelSelectData: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       //
       timeTableHeaders: [
-        { text: 'Weekday', value: 'weekday', align: '', sortable: false },
-        { text: 'Morning', value: 'morning', align: '', sortable: false },
-        { text: 'Afternoon', value: 'afternoon', align: '', sortable: false },
-        { text: 'Evening', value: 'evening', align: '', sortable: false }
+        { text: 'Ngày trong tuần', value: 'weekday', align: '', sortable: false },
+        { text: 'Sáng', value: 'morning', align: '', sortable: false },
+        { text: 'Chiều', value: 'afternoon', align: '', sortable: false },
+        { text: 'Tối', value: 'evening', align: '', sortable: false }
       ],
       feeTableHeaders: [
-        { text: 'Subject', value: 'subject', align: '', sortable: false },
-        { text: 'Level', value: 'level', align: '', sortable: false },
-        { text: 'Fee/session (VND)', value: 'fee', align: '', sortable: false }
+        { text: 'Môn học', value: 'subject', align: '', sortable: false },
+        { text: 'Lớp', value: 'level', align: '', sortable: false },
+        { text: 'Học phí/buổi', value: 'fee', align: '', sortable: false }
       ],
       /* Tutor Info State */
       // Personal Info
@@ -566,13 +566,13 @@ export default {
       services: {
         format: '',
         freeTime: [
-          { weekday: 'Monday', morning: false, afternoon: false, evening: false },
-          { weekday: 'Tuesday', morning: false, afternoon: false, evening: false },
-          { weekday: 'Wednesday', morning: false, afternoon: false, evening: false },
-          { weekday: 'Thursday', morning: false, afternoon: false, evening: false },
-          { weekday: 'Friday', morning: false, afternoon: false, evening: false },
-          { weekday: 'Saturday', morning: false, afternoon: false, evening: false },
-          { weekday: 'Sunday', morning: false, afternoon: false, evening: false }
+          { weekday: 'Thứ 2', morning: false, afternoon: false, evening: false },
+          { weekday: 'Thứ 3', morning: false, afternoon: false, evening: false },
+          { weekday: 'Thứ 4', morning: false, afternoon: false, evening: false },
+          { weekday: 'Thứ 5', morning: false, afternoon: false, evening: false },
+          { weekday: 'Thứ 6', morning: false, afternoon: false, evening: false },
+          { weekday: 'Thứ 7', morning: false, afternoon: false, evening: false },
+          { weekday: 'Chủ nhật', morning: false, afternoon: false, evening: false }
         ],
         fee: [
           { subject: '', level: [], fee: '' },

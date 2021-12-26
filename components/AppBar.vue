@@ -66,9 +66,11 @@ export default {
   data () {
     return {
       navigation: [
+        /*
         { title: 'Home', link: '/' },
         { title: 'Search', link: '' },
         { title: 'About', link: '' }
+        */
       ],
       menu: [
         { title: 'My bookings', icon: 'mdi-book-education', action: 'goToBookingList' },
