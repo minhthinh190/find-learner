@@ -28,7 +28,7 @@
             </v-icon>
 
             <nuxt-link to="" class="nav-link">
-              My profile
+              Tài khoản của tôi
             </nuxt-link>
           </div>
 
@@ -38,7 +38,7 @@
             </v-icon>
 
             <nuxt-link to="" class="nav-link">
-              Notifications
+              Thông báo
             </nuxt-link>
           </div>
         </v-container>
@@ -57,17 +57,18 @@
                 outlined
                 small
               >
-                {{ capitalizeFirstLetter(request.status) }}
+                {{ translateStatus(request.status) }}
               </v-chip>
             </v-col>
 
             <v-col cols="6">
               <p class="ma-0 text-right subtitle-2 created-date">
-                Created date: {{ request.createdDate }}
+                Ngày tạo: {{ request.createdDate }}
               </p>
             </v-col>
           </v-row>
 
+          <!--
           <v-row class="mb-4">
             <v-col cols="12">
               <v-sheet
@@ -98,6 +99,7 @@
               </v-sheet>
             </v-col>
           </v-row>
+          -->
 
           <v-row class="mb-4">
             <v-col cols="12">
@@ -115,7 +117,7 @@
               <v-card flat tile>
                 <div class="px-4 pt-4 pb-0">
                   <p class="ma-0 font-weight-bold">
-                    Description
+                    Mô tả
                   </p>
                 </div>
 
@@ -135,7 +137,7 @@
               >
                 <p>
                   <span class="font-weight-bold">
-                    Address:&nbsp;
+                    Địa chỉ:&nbsp;
                   </span>
                   {{ request.address }}
                 </p>
@@ -152,7 +154,7 @@
               >
                 <p>
                   <span class="font-weight-bold">
-                    Contact:&nbsp;
+                    Liên hệ:&nbsp;
                   </span>
                   {{ request.contact }}
                 </p>
@@ -168,7 +170,7 @@
                 class="px-6 text-capitalize white--text"
                 @click.stop="isDialogShowed = true"
               >
-                Apply
+                Ứng tuyển
               </v-btn>
             </v-col>
           </v-row>
@@ -180,15 +182,19 @@
             v-on:confirm="applyForRequest"
           >
             <template #dialogTitle>
-              Applying Confirmation
+              Xác nhận ứng tuyển
             </template>
 
             <template #dialogContent>
-              Are you sure to apply this request?
+              Bạn muốn ứng tuyển cho yêu cầu này?
             </template>
 
             <template #confirmBtnText>
-              Apply
+              Ứng tuyển
+            </template>
+
+            <template #cancelBtnText>
+              Hủy
             </template>
           </confirm-dialog>
         </v-container>
@@ -213,11 +219,11 @@ export default {
       isDialogShowed: false,
       isApplying: false,
       headers: [
-        { text: 'Subject', value: 'subject', align: 'start', sortable: false },
-        { text: 'Format', value: 'format', align: 'start', sortable: false },
-        { text: 'Time', value: 'time', align: 'start', sortable: false },
-        { text: 'Per week', value: 'perWeek', align: 'start', sortable: false },
-        { text: 'Duration', value: 'duration', align: 'start', sortable: false }
+        { text: 'Môn học', value: 'subject', align: 'start', sortable: false },
+        { text: 'Hình thức', value: 'format', align: 'start', sortable: false },
+        { text: 'Thời gian', value: 'time', align: 'start', sortable: false },
+        { text: 'Số buổi/tuần', value: 'perWeek', align: 'start', sortable: false },
+        { text: 'Thời lượng', value: 'duration', align: 'start', sortable: false }
       ]
     }
   },
@@ -244,6 +250,21 @@ export default {
     this.$store.dispatch('user/getUserProfile')
   },
   methods: {
+    translateStatus (originalStatus) {
+      let status = ''
+      switch (originalStatus) {
+        case 'waiting':
+          status = 'Đang chờ'
+          break
+        case 'on-going':
+          status = 'Đang tiến hành'
+          break
+        case 'finished':
+          status = 'Hoàn tất'
+          break
+      }
+      return status
+    },
     capitalizeFirstLetter (str) {
       return str.charAt(0).toUpperCase() + str.slice(1)
     },
@@ -254,7 +275,7 @@ export default {
           format: this.request.format,
           time: this.request.time,
           perWeek: this.request.perWeek,
-          duration: this.request.duration + ' (mins)'
+          duration: this.request.duration + ' (phút)'
         }
       ]
       return data

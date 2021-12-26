@@ -6,7 +6,7 @@
     >
       <v-col cols="12">
         <div class="text-center">
-          <h1>Lorem ipsum dolor sit amet</h1>
+          <h1>Danh sách lớp cần gia sư</h1>
         </div>
 
         <v-spacer class="my-6"/>
@@ -19,7 +19,7 @@
               <v-col cols="12" lg="2" sm="3" class="px-2 py-0">
                 <v-select
                   v-model="subject"
-                  label="Subject"
+                  label="Môn học"
                   color="teal darken-1"
                   background-color="grey lighten-4"
                   :items="subjects"
@@ -35,7 +35,7 @@
               <v-col cols="12" lg="4" md="4" sm="6" class="px-2">
                 <v-container class="pa-0 d-flex">
                   <v-text-field
-                    label="Find by ID"
+                    label="Tìm theo mã lớp, hình thức, thời gian"
                     color="teal accent-4"
                     dense
                     outlined
@@ -88,19 +88,19 @@
 
                 <v-card-text class="py-3 card-text">
                   <p class="ma-0">
-                    <strong>Subject: </strong>{{ capitalizeFirstLetter(request.subject) }}
+                    <strong>Môn học: </strong>{{ capitalizeFirstLetter(request.subject) }}
                   </p>
                   <v-spacer class="mb-2"/>
                   <p class="ma-0">
-                    <strong>Format: </strong>{{ request.format }}
+                    <strong>Hình thức: </strong>{{ request.format }}
                   </p>
                   <v-spacer class="mb-2"/>
                   <p class="ma-0">
-                    <strong>Address: </strong>{{ request.address }}
+                    <strong>Địa chỉ: </strong>{{ request.address }}
                   </p>
                   <v-spacer class="mb-2"/>
                   <p class="ma-0">
-                    <strong>Time: </strong>{{ request.time }}
+                    <strong>Thời gian: </strong>{{ request.time }}
                   </p>
                 </v-card-text>
 
@@ -118,7 +118,7 @@
                       color="teal darken-1"
                       class="text-capitalize"
                     >
-                      Details
+                      Chi tiết
                     </v-btn>
                   </nuxt-link>
                 </v-card-actions>
@@ -159,7 +159,7 @@
         <v-container fluid v-if="!isLoading && !paginatedRequests.length">
           <v-row class="pa-lg-16 pa-md-10">
             <v-col cols="12" class="text-center my-lg-10 pa-16">
-              <h2>No requests</h2>
+              <h2>Không có yêu cầu</h2>
             </v-col>
           </v-row>
         </v-container>
@@ -177,6 +177,16 @@ export default {
   data () {
     return {
       subjects: [
+        'Tất cả',
+        'Toán',
+        'Tiếng Anh',
+        'Ngữ văn',
+        'Vật lý',
+        'Hóa học',
+        'Sinh học',
+        'IELTS',
+        'TOEIC'
+        /*
         'All',
         'Math',
         'English',
@@ -186,6 +196,7 @@ export default {
         'Biology',
         'IELTS',
         'TOEIC'
+        */
       ],
       page: 1,
       isLoading: false,
