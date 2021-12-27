@@ -8,7 +8,7 @@
       <v-col
         cols="12"
         md="3"
-        class="pr-md-3 pa-0"
+        class="pr-md-6 pa-0"
       >
         <v-container
           fluid
@@ -49,60 +49,59 @@
         md="9"
         class="pl-md-3 pa-0"
       >
-        <v-container fluid class="">
-          <v-row class="mb-4">
-            <v-col cols="6">
-              <v-chip
-                color="primary"
-                outlined
-                small
+        <!-- Loader -->
+        <v-container v-if="isLoading" fluid>
+          <v-row>
+            <v-col class="pl-3">
+              <v-skeleton-loader
+                type="heading"
+              ></v-skeleton-loader>
+
+              <v-spacer class="my-6"/>
+
+              <div
+                v-for="n in 2"
+                :key="n"
+              >
+                <v-skeleton-loader
+                  type="card"
+                  class="v-skeleton-loader--custom"
+                ></v-skeleton-loader>
+                <v-spacer class="my-6"/>
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
+
+        <!-- Request Details -->
+        <v-container v-else fluid>
+          <v-row class="mb-1">
+            <!-- Status -->
+            <v-col cols="6" class="pl-3">
+              <div
+                class="px-2 py-1 status-label"
+                :class="{
+                  'status-label--waiting': request.status === 'waiting',
+                  'status-label--on-going': request.status === 'on-going',
+                  'status-label--finished': request.status === 'finished'
+                }" 
               >
                 {{ translateStatus(request.status) }}
-              </v-chip>
+              </div>
             </v-col>
 
+            <!-- Created Date -->
             <v-col cols="6">
-              <p class="ma-0 text-right subtitle-2 created-date">
-                Ngày tạo: {{ request.createdDate }}
-              </p>
-            </v-col>
-          </v-row>
-
-          <!--
-          <v-row class="mb-4">
-            <v-col cols="12">
-              <v-sheet
-                color="white"
-                height="50"
-                class="px-4 py-3 v-sheet--custom"
-              >
-                <p>
-                  <span class="font-weight-bold">
-                    Tutor:&nbsp;
-                  </span>
-
-                  <nuxt-link
-                    v-for="(tutor, index) in request.tutors"
-                    :key="index"
-                    to=""
-                    class="link"
-                  >
-                    {{ tutor }}
-                    <span
-                      v-if="index !== request.tutors.length - 1"
-                      class="comma"
-                    >
-                      ,&nbsp;
-                    </span>
-                  </nuxt-link>
+              <div class="mt-1">
+                <p class="ma-0 text-right subtitle-2 created-date">
+                  Ngày tạo: {{ request.createdDate }}
                 </p>
-              </v-sheet>
+              </div>
             </v-col>
           </v-row>
-          -->
 
           <v-row class="mb-4">
-            <v-col cols="12">
+            <v-col cols="12" class="pl-3">
               <v-data-table
                 :headers="headers"
                 :items="generateDetailsTableData()"
@@ -113,8 +112,8 @@
           </v-row>
 
           <v-row class="mb-4">
-            <v-col cols="12">
-              <v-card flat tile>
+            <v-col cols="12" class="pl-3">
+              <v-card flat tile outlined>
                 <div class="px-4 pt-4 pb-0">
                   <p class="ma-0 font-weight-bold">
                     Mô tả
@@ -129,36 +128,32 @@
           </v-row>
 
           <v-row class="mb-4">
-            <v-col cols="12">
-              <v-sheet
-                color="white"
-                height="50"
-                class="px-4 py-3 v-sheet--custom"
-              >
-                <p>
-                  <span class="font-weight-bold">
-                    Địa chỉ:&nbsp;
-                  </span>
-                  {{ request.address }}
-                </p>
-              </v-sheet>
+            <v-col cols="12" class="pl-3">
+              <v-card flat tile outlined>
+                <v-card-text>
+                  <p class="ma-0">
+                    <span class="font-weight-bold black--text custom-card-text">
+                      Địa chỉ:&nbsp;
+                    </span>
+                    {{ request.address }}
+                  </p>
+                </v-card-text>
+              </v-card>
             </v-col>
           </v-row>
 
           <v-row class="mb-4">
-            <v-col cols="12">
-              <v-sheet
-                color="white"
-                height="50"
-                class="px-4 py-3 v-sheet--custom"
-              >
-                <p>
-                  <span class="font-weight-bold">
-                    Liên hệ:&nbsp;
-                  </span>
-                  {{ request.contact }}
-                </p>
-              </v-sheet>
+            <v-col cols="12" class="pl-3">
+              <v-card flat tile outlined>
+                <v-card-text>
+                  <p class="ma-0">
+                    <span class="font-weight-bold black--text custom-card-text">
+                      Liên hệ:&nbsp;
+                    </span>
+                    {{ request.contact }}
+                  </p>
+                </v-card-text>
+              </v-card>
             </v-col>
           </v-row>
 
@@ -166,6 +161,7 @@
             <v-col cols="12" class="text-right">
               <v-btn
                 color="teal darken-1"
+                tile
                 depressed
                 class="px-6 text-capitalize white--text"
                 @click.stop="isDialogShowed = true"
@@ -216,6 +212,7 @@ export default {
   },
   data () {
     return {
+      isLoading: false,
       isDialogShowed: false,
       isApplying: false,
       headers: [
@@ -239,15 +236,17 @@ export default {
       request: state => state.request.request
     }),
   },
-  created () {
+  async mounted () {
+    this.isLoading = true
     const id = this.requestId
     const userEmail = this.requestOwner
 
-    this.$store.dispatch('request/getRequestById', {
+    await this.$store.dispatch('request/getRequestById', {
       userEmail,
       id
     })
-    this.$store.dispatch('user/getUserProfile')
+    await this.$store.dispatch('user/getUserProfile')
+    this.isLoading = false
   },
   methods: {
     translateStatus (originalStatus) {
@@ -331,13 +330,38 @@ export default {
   color: #757575;
   text-decoration: none;
 }
+.status-label {
+  width: fit-content;
+  font-size: 13px;
+  font-weight: bold;
+  color: #263238;
+}
+.status-label--waiting {
+  background: #E57373;
+}
+.status-label--on-going {
+  background: #E6EE9C;
+}
+.status-label--finished {
+  background: #80CBC4;
+}
 .created-date {
   font-weight: normal;
   color: #757575;
 }
+.custom-card-text {
+  font-size: 16px;
+}
+.v-skeleton-loader--custom {
+  border-radius: 0;
+}
 </style>
 
 <style>
+.v-table--custom {
+  border: 1px solid #E0E0E0;
+  border-radius: 0;
+}
 .v-table--custom thead tr {
   background: white;
 }

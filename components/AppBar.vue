@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-app-bar
-      color="teal accent-4"
+      color="white"
+      elevation="1"
       flat
-      dark
       class="px-lg-10"
     >
       <v-app-bar-title>
-        <nuxt-link to="/" class="home-link">
+        <nuxt-link to="/" class="home-link app-title">
           Find Learner
         </nuxt-link>
       </v-app-bar-title>
@@ -73,10 +73,10 @@ export default {
         */
       ],
       menu: [
-        { title: 'My bookings', icon: 'mdi-book-education', action: 'goToBookingList' },
-        { title: 'My notifications', icon: 'mdi-bell', action: '' },
-        { title: 'My Profile', icon: 'mdi-account', action: '' },
-        { title: 'Sign Out', icon: 'mdi-logout', action: 'signOut' }
+        { title: 'Danh sách lớp', icon: 'mdi-book-education', action: 'goToBookingList' },
+        { title: 'Thông báo', icon: 'mdi-bell', action: '' },
+        { title: 'Tài khoản của tôi', icon: 'mdi-account', action: '' },
+        { title: 'Đăng xuất', icon: 'mdi-logout', action: 'signOut' }
       ]
     }
   },
@@ -109,5 +109,8 @@ export default {
 .nav {
   color: white;
   text-decoration: none;
+}
+.app-title {
+  color: #00897B;
 }
 </style>

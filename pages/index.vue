@@ -12,51 +12,61 @@
         <v-spacer class="my-6"/>
 
         <!-- Filter & Search Bar -->
-        <v-container fluid class="px-2 py-0">
-          <v-sheet class="px-5 py-4">
-            <v-row justify="space-between">
-              <!-- Filter -->
-              <v-col cols="12" lg="2" sm="3" class="px-2 py-0">
-                <v-select
-                  v-model="subject"
-                  label="Môn học"
-                  color="teal darken-1"
-                  background-color="grey lighten-4"
-                  :items="subjects"
-                  solo
-                  dense
-                  flat
-                  hide-details
-                  class="my-3"
-                ></v-select>
-              </v-col>
-
-              <!-- Search Bar -->
-              <v-col cols="12" lg="4" md="4" sm="6" class="px-2">
-                <v-container class="pa-0 d-flex">
-                  <v-text-field
-                    label="Tìm theo mã lớp, hình thức, thời gian"
-                    color="teal accent-4"
-                    dense
-                    outlined
-                    hide-details
-                  ></v-text-field>
-
-                  <div>
-                    <v-btn
-                      height="100%"
-                      dark
-                      depressed
+        <v-container fluid class="px-3 py-0">
+          <v-row justify="space-between">
+            <!-- Filter -->
+            <v-col cols="12" lg="9" sm="4" class="px-2 pt-3 pb-0">
+              <v-container fluid class="pa-0">
+                <v-row>
+                  <v-col cols="12" lg="2" sm="6" class="py-0">
+                    <!-- Subject -->
+                    <v-select
+                      v-model="query.subject"
+                      label="Môn học"
                       color="teal darken-1"
-                      class="ml-2"
-                    >
-                      <v-icon>mdi-magnify</v-icon>
-                    </v-btn>
-                  </div>
-                </v-container>
-              </v-col>
-            </v-row>
-          </v-sheet>
+                      :items="subjects"
+                      outlined
+                      dense
+                      hide-details
+                      class="my-3 v-input--custom"
+                    ></v-select>
+                  </v-col>
+
+                  <!-- Format -->
+                  <!--
+                  <v-col cols="12" lg="2" sm="6" class="py-0">
+                    <v-select
+                      v-model="query.format"
+                      label="Hình thức"
+                      color="teal darken-1"
+                      :items="['Offline', 'Online', 'Offline & Online']"
+                      outlined
+                      dense
+                      hide-details
+                      class="my-3 v-input--custom"
+                    ></v-select>
+                  </v-col>
+                  -->
+                </v-row>
+              </v-container>
+            </v-col>
+
+            <!-- Search Bar -->
+            <v-col cols="12" lg="3" md="3" sm="6" class="px-2">
+              <v-text-field
+                v-model="queryStr"
+                label="Tìm theo mã lớp"
+                color="teal accent-4"
+                prepend-inner-icon="mdi-magnify"
+                dense
+                outlined
+                hide-details
+                single-line
+                class="v-input--custom"
+                @keyup.enter="queryRequestsByQueryStr"
+              ></v-text-field>
+            </v-col>
+          </v-row>
         </v-container>
 
         <v-spacer class="my-2"/>
@@ -74,7 +84,7 @@
               xs="12"
               class="pa-2"
             >
-              <v-card tile elevation="0">
+              <v-card outlined tile elevation="0">
                 <v-card-subtitle class="py-2">
                   <div class="d-flex justify-space-between">
                     <p class="ma-0 request-id">
@@ -114,6 +124,7 @@
                     class="link"
                   >
                     <v-btn
+                      tile
                       text
                       color="teal darken-1"
                       class="text-capitalize"
@@ -142,15 +153,22 @@
         </v-container>
 
         <!-- Loader -->
-        <v-container fluid v-if="isLoading">
-          <v-row class="pa-lg-16 pa-md-10">
-            <v-col cols="12" class="text-center my-lg-10 pa-16">
-              <v-progress-circular
-                :size="50"
-                :width="5"
-                indeterminate
-                color="teal accent-4"
-              ></v-progress-circular>
+        <v-container fluid v-if="isLoading" class="py-0">
+          <v-row>
+            <v-col
+              v-for="n in 12"
+              :key="n"
+              cols="12"
+              lg="3"
+              md="4"
+              sm="6"
+              xs="12"
+              class="px-2 py-0"
+            >
+              <v-skeleton-loader
+                type="card"
+                class="v-skeleton-loader--custom"
+              ></v-skeleton-loader>
             </v-col>
           </v-row>
         </v-container>
@@ -186,21 +204,14 @@ export default {
         'Sinh học',
         'IELTS',
         'TOEIC'
-        /*
-        'All',
-        'Math',
-        'English',
-        'Literature',
-        'Physics',
-        'Chemistry',
-        'Biology',
-        'IELTS',
-        'TOEIC'
-        */
       ],
       page: 1,
       isLoading: false,
-      subject: 'All'
+      queryStr: '',
+      query: {
+        subject: 'tất cả',
+        format: ''
+      }
     }
   },
   computed: {
@@ -209,8 +220,11 @@ export default {
     })
   },
   watch: {
-    subject (val) {
-      this.filterRequestsBySubject(val)
+    query: {
+      handler () {
+        this.filterRequests()
+      },
+      deep: true
     },
     page () {
       this.showLoader()
@@ -220,17 +234,22 @@ export default {
     }
   },
   mounted () {
-    this.filterRequestsBySubject(this.subject)
+    this.filterRequests()
   },
   methods: {
-    async filterRequestsBySubject (subject) {
+    async filterRequests () {
       this.showLoader()
-      await this.$store.dispatch('request/filterRequests', {
-        subject: subject.toLowerCase()
-      })
+      await this.$store.dispatch('request/filterRequests', this.query)
       this.hideLoader()
 
       this.$store.dispatch('request/paginateRequestList')
+    },
+
+    async queryRequestsByQueryStr () {
+      this.isLoading = true
+      await this.$store.dispatch('request/queryRequestById', this.queryStr)
+      this.$store.dispatch('request/paginateRequestList')
+      this.isLoading = false
     },
 
     showLoader () {
@@ -260,5 +279,23 @@ export default {
 }
 .link {
   text-decoration: none;
+}
+.v-input--custom {
+  border-radius: 0;
+}
+.v-skeleton-loader--custom {
+  border-radius: 0;
+}
+</style>
+
+<style scoped>
+::v-deep .v-pagination__item {
+  border: 1px solid #BDBDBD;
+  border-radius: 0;
+  box-shadow: none;
+}
+::v-deep .v-pagination__navigation {
+  border-radius: 0;
+  box-shadow: none;
 }
 </style>
