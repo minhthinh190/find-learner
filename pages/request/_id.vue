@@ -283,7 +283,9 @@ export default {
       this.isApplying = true
 
       const tutorData = {
+        id: this.tutor.id,
         email: this.tutor.email,
+        name: this.tutor.name,
         status: 'applying'
       }
       requestAPI.updateTutorDataOfRequest(
