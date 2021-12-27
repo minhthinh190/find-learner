@@ -41,8 +41,8 @@ export const actions = {
     commit('setList', requestList)
   },
 
-  async filterRequests ({ commit }, queryFields) {
-    const requestList = await requestAPI.filterAllPendingRequests(queryFields)
+  async filterRequests ({ commit }, queryObj) {
+    const requestList = await requestAPI.filterAllPendingRequests(queryObj)
     commit('setList', requestList)
   },
 
@@ -57,6 +57,11 @@ export const actions = {
       return resultArray
     }, [])
     commit('setPaginatedRequestList', paginatedRequestList)
+  },
+
+  async queryRequestById ({ commit }, requestId) {
+    const requests = await requestAPI.queryRequestById(requestId)
+    commit('setList', requests)
   },
 
   async getRequestById ({ commit }, { userEmail, id }) {

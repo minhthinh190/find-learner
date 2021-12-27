@@ -59,6 +59,6 @@ export default {
 
 <style>
 .root-container {
-  background: #F5F5F5;
+  background: white;
 }
 </style>

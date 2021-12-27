@@ -30,6 +30,21 @@ const getAllUsers = async () => {
   return users
 }
 
+const getUserRequestById = async (userDoc, requestId) => {
+  const requests = []
+  const queryRef = collection(db, _rootCollection, userDoc, _collection)
+  const q = query(
+    queryRef,
+    where('id', '==', parseInt(requestId))
+  )
+
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach((doc) => {
+    requests.push(doc.data())
+  })
+  return requests
+}
+
 const getUserPendingRequests = async (userDoc) => {
   const pendingRequests = []
   const queryRef = collection(db, _rootCollection, userDoc, _collection)
@@ -47,7 +62,7 @@ const filterUserPendingRequests = async (userDoc, queryFields) => {
   const queryRef = collection(db, _rootCollection, userDoc, _collection)
   let q = null
 
-  if (queryFields.subject === 'all') {
+  if (queryFields.subject.toLowerCase() === 'tất cả') {
     q = query(
       queryRef,
       where('status', '==', 'waiting')
@@ -56,7 +71,7 @@ const filterUserPendingRequests = async (userDoc, queryFields) => {
     q = query(
       queryRef,
       where('status', '==', 'waiting'),
-      where('subject', '==', queryFields.subject)
+      where('subject', '==', queryFields.subject.toLowerCase())
     )
   }
 
@@ -88,6 +103,17 @@ const filterAllPendingRequests = async (queryFields) => {
     allPendingRequests = [...allPendingRequests, ...requests]
   }
   return allPendingRequests
+}
+
+const queryRequestById = async (requestId) => {
+  let requests = []
+  const allUsers = await getAllUsers()
+
+  for (const user of allUsers) {
+    const request = await getUserRequestById(user, requestId)
+    requests = [...requests, ...request]
+  }
+  return requests
 }
 
 const updateTutorDataOfRequest = async (userDoc, requestId, tutorData) => {
@@ -125,5 +151,6 @@ export const requestAPI = {
   getAllPendingRequests,
   filterAllPendingRequests,
   queryRequestByProperty,
+  queryRequestById,
   updateTutorDataOfRequest
 }

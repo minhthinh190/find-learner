@@ -4,11 +4,11 @@
     width="400"
     @click:outside="$emit('close-dialog')"
   >
-    <v-card>
+    <v-card flat tile>
       <v-card-title class="px-4">
-        <h5>
+        <h4>
           <slot name="dialogTitle">Dialog Title</slot>
-        </h5>
+        </h4>
       </v-card-title>
 
       <v-card-text class="px-4">
@@ -21,9 +21,9 @@
 
       <v-card-actions>
         <v-btn
+          tile
           depressed
-          color="red accent-2"
-          class="px-3 text-capitalize white--text"
+          class="px-3 text-capitalize"
           @click="$emit('close-dialog')"
         >
           <slot name="cancelBtnText">Cancel</slot>
@@ -32,6 +32,7 @@
         <v-spacer />
 
         <v-btn
+          tile
           depressed
           color="teal darken-1"
           class="px-3 text-capitalize white--text"
