@@ -17,6 +17,7 @@
                 outlined
                 single-line
                 :rules="emailRules"
+                class="v-input--custom"
               ></v-text-field>
 
               <v-spacer class="py-1" />
@@ -31,7 +32,7 @@
                 :type="isPwShowed ? 'text' : 'password'"
                 :append-icon="isPwShowed ? 'mdi-eye' : 'mdi-eye-off'"
                 :rules="passwordRules"
-                class="pb-0 mb-0"
+                class="pb-0 mb-0 v-input--custom"
                 @click:append="isPwShowed = !isPwShowed"
                 @keyup.enter="signIn"
               ></v-text-field>
@@ -47,6 +48,7 @@
               <v-col cols="12" sm=12 md="12" lg="12" align="center">
                 <v-btn
                   color="teal darken-1"
+                  tile
                   depressed
                   block
                   :loading="isSigningIn"
@@ -134,5 +136,8 @@ export default {
 }
 .link:hover {
   filter: brightness(70%);
+}
+.v-input--custom {
+  border-radius: 0;
 }
 </style>

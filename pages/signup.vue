@@ -29,6 +29,7 @@
               single-line
               color="teal accent-4"
               :rules="textInputRules"
+              class="v-input--custom"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -71,6 +72,7 @@
               color="teal accent-4"
               type="number"
               :rules="numberInputRules"
+              class="v-input--custom"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -89,6 +91,7 @@
               placeholder="Ngày"
               :items="dateSelectData"
               :rules="numberInputRules"
+              class="v-input--custom"
             ></v-select>
           </v-col>
 
@@ -101,6 +104,7 @@
               placeholder="Tháng"
               :items="monthSelectData"
               :rules="numberInputRules"
+              class="v-input--custom"
             ></v-select>
           </v-col>
 
@@ -113,6 +117,7 @@
               placeholder="Năm"
               :items="yearSelectData"
               :rules="numberInputRules"
+              class="v-input--custom"
             ></v-select>
           </v-col>
         </v-row>
@@ -129,6 +134,7 @@
               single-line
               color="teal accent-4"
               :rules="textInputRules"
+              class="v-input--custom"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -182,6 +188,7 @@
               single-line
               color="teal accent-4"
               :rules="textInputRules"
+              class="v-input--custom"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -198,6 +205,7 @@
               single-line
               color="teal accent-4"
               :rules="textInputRules"
+              class="v-input--custom"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -219,6 +227,7 @@
               outlined
               color="teal accent-4"
               :rules="textInputRules"
+              class="v-input--custom"
             ></v-textarea>
           </v-col>
         </v-row>
@@ -233,6 +242,7 @@
               outlined
               color="teal accent-4"
               :rules="textInputRules"
+              class="v-input--custom"
             ></v-textarea>
           </v-col>
         </v-row>
@@ -249,6 +259,7 @@
               chips
               color="teal accent-4"
               :items="achievementSelectData"
+              class="v-input--custom"
             >
               <template v-slot:selection="{ item }">
                 <div class="mr-2 achievement-label">
@@ -307,7 +318,7 @@
               dense
               hide-default-footer
             >
-              <template v-slot:item.morning="{ item }">
+              <template v-slot:[`item.morning`]="{ item }">
                 <v-checkbox
                   v-model="item.morning"
                   color="teal accent-4"
@@ -315,7 +326,7 @@
                   class="ma-0"
                 ></v-checkbox>
               </template>
-              <template v-slot:item.afternoon="{ item }">
+              <template v-slot:[`item.afternoon`]="{ item }">
                 <v-checkbox
                   v-model="item.afternoon"
                   color="teal accent-4"
@@ -323,7 +334,7 @@
                   class="ma-0"
                 ></v-checkbox>
               </template>
-              <template v-slot:item.evening="{ item }">
+              <template v-slot:[`item.evening`]="{ item }">
                 <v-checkbox
                   v-model="item.evening"
                   color="teal accent-4"
@@ -345,7 +356,7 @@
               :items="services.fee"
               hide-default-footer
             >
-              <template v-slot:item.subject="{ item }">
+              <template v-slot:[`item.subject`]="{ item }">
                 <v-select
                   v-model="item.subject"
                   dense
@@ -354,9 +365,10 @@
                   color="teal accent-4"
                   placeholder="Môn học"
                   :items="subjectSelectData"
+                  class="v-input--custom"
                 ></v-select>
               </template>
-              <template v-slot:item.level="{ item }">
+              <template v-slot:[`item.level`]="{ item }">
                 <v-select
                   v-model="item.level"
                   dense
@@ -366,9 +378,10 @@
                   color="teal accent-4"
                   placeholder="Lớp"
                   :items="levelSelectData"
+                  class="v-input--custom"
                 ></v-select>
               </template>
-              <template v-slot:item.fee="{ item }">
+              <template v-slot:[`item.fee`]="{ item }">
                 <v-text-field
                   v-model="item.fee"
                   dense
@@ -378,6 +391,7 @@
                   color="teal accent-4"
                   placeholder="50000"
                   type="number"
+                  class="v-input--custom"
                 ></v-text-field>
               </template>
             </v-data-table>
@@ -404,6 +418,7 @@
               color="teal accent-4"
               placeholder="johndoe@email.com"
               :rules="emailRules"
+              class="v-input--custom"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -422,6 +437,7 @@
               :type="isPwShowed ? 'text' : 'password'"
               :append-icon="isPwShowed ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="passwordRules"
+              class="v-input--custom"
               @click:append="isPwShowed = !isPwShowed"
             ></v-text-field>
           </v-col>
@@ -442,6 +458,7 @@
               :type="isCfPwShowed ? 'text' : 'password'"
               :append-icon="isCfPwShowed ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="confirmPasswordRules"
+              class="v-input--custom"
               @click:append="isCfPwShowed = !isCfPwShowed"
             ></v-text-field>
           </v-col>
@@ -459,6 +476,7 @@
           <v-col cols="12" sm="6" class="text-right">
             <v-btn
               color="teal darken-1"
+              tile
               depressed
               :loading="isSigningUp"
               class="pa-5 white--text"
@@ -605,7 +623,7 @@ export default {
 
         const tutorProfile = {
           // Personal Info
-          name: this.personalInfo.name,
+          name: this.formatName(this.personalInfo.name),
           gender: this.personalInfo.gender,
           phone: this.personalInfo.phone,
           birthDate: this.personalInfo.birthDate,
@@ -650,6 +668,16 @@ export default {
       }
     },
 
+    formatName (name) {
+      let formattedName = name
+        .toLowerCase()
+        .split(' ')
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(' ')
+
+      return formattedName
+    },
+
     showNotification (message, color) {
       this.$store.dispatch('notification/showNotification', {
         message,
@@ -691,5 +719,8 @@ export default {
 }
 p {
   margin: 0;
+}
+.v-input--custom {
+  border-radius: 0;
 }
 </style>
