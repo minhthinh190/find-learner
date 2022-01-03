@@ -30,21 +30,6 @@ const getAllUsers = async () => {
   return users
 }
 
-const getUserRequestById = async (userDoc, requestId) => {
-  const requests = []
-  const queryRef = collection(db, _rootCollection, userDoc, _collection)
-  const q = query(
-    queryRef,
-    where('id', '==', parseInt(requestId))
-  )
-
-  const querySnapshot = await getDocs(q)
-  querySnapshot.forEach((doc) => {
-    requests.push(doc.data())
-  })
-  return requests
-}
-
 const getUserPendingRequests = async (userDoc) => {
   const pendingRequests = []
   const queryRef = collection(db, _rootCollection, userDoc, _collection)
@@ -83,6 +68,21 @@ const filterUserPendingRequests = async (userDoc, queryFields) => {
 }
 
 // Public API
+const getUserRequestById = async (userDoc, requestId) => {
+  const requests = []
+  const queryRef = collection(db, _rootCollection, userDoc, _collection)
+  const q = query(
+    queryRef,
+    where('id', '==', parseInt(requestId))
+  )
+
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach((doc) => {
+    requests.push(doc.data())
+  })
+  return requests
+}
+
 const getAllPendingRequests = async () => {
   let allPendingRequests = []
   const allUsers = await getAllUsers()
@@ -116,6 +116,42 @@ const queryRequestById = async (requestId) => {
   return requests
 }
 
+const updateRequestStatus = async (userDoc, requestId, status) => {
+  const docRef = doc(
+    db,
+    _rootCollection,
+    userDoc,
+    _collection,
+    requestId.toString()
+  )
+  await updateDoc(docRef, {
+    status: status
+  })
+}
+
+const updateTutorStatusOfRequest = async (userDoc, requestId, tutorData) => {
+  const docRef = doc(
+    db,
+    _rootCollection,
+    userDoc,
+    _collection,
+    requestId.toString()
+  )
+
+  const res = await getDoc(docRef)
+  const tutorList = res.data().tutors
+
+  tutorList.forEach((tutor) => {
+    if (tutor.name === tutorData.name) {
+      tutor.status = tutorData.status
+    }
+  })
+
+  return updateDoc(docRef, {
+    tutors: tutorList
+  })
+}
+
 const updateTutorDataOfRequest = async (userDoc, requestId, tutorData) => {
   const docRef = doc(
     db,
@@ -134,6 +170,30 @@ const updateTutorDataOfRequest = async (userDoc, requestId, tutorData) => {
   })
 }
 
+const removeTutorDataOfRequest = async (userDoc, requestId, tutorData) => {
+  const docRef = doc(
+    db,
+    _rootCollection,
+    userDoc,
+    _collection,
+    requestId.toString()
+  )
+
+  const res = await getDoc(docRef)
+  const tutorList = res.data().tutors
+  let newTutorList = []
+
+  tutorList.forEach((tutor) => {
+    if (tutor.name !== tutorData.name) {
+      newTutorList.push(tutor)
+    }
+  })
+
+  return updateDoc(docRef, {
+    tutors: newTutorList
+  })
+}
+
 const queryRequestByProperty = async (userDoc, property, value) => {
   const queryRef = collection(db, _rootCollection, userDoc, _collection)
   const q = query(queryRef, where(property, '==', value))
@@ -148,9 +208,13 @@ const queryRequestByProperty = async (userDoc, property, value) => {
 }
 
 export const requestAPI = {
+  getUserRequestById,
   getAllPendingRequests,
   filterAllPendingRequests,
   queryRequestByProperty,
   queryRequestById,
-  updateTutorDataOfRequest
+  updateRequestStatus,
+  updateTutorStatusOfRequest,
+  updateTutorDataOfRequest,
+  removeTutorDataOfRequest
 }
