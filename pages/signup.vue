@@ -643,7 +643,9 @@ export default {
           freeTime: this.services.freeTime,
           fee: this.services.fee,
           // Account
-          email: this.account.email
+          email: this.account.email,
+          // Class List
+          class: []
         }
 
         // Create new account
