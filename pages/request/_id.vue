@@ -1,6 +1,5 @@
 <template>
   <v-container
-    v-if="request"
     fluid
     class="py-7 pa-sm-16 root-container"
   >
@@ -236,7 +235,7 @@ export default {
       request: state => state.request.request
     }),
   },
-  async mounted () {
+  async created () {
     this.isLoading = true
     const id = this.requestId
     const userEmail = this.requestOwner
