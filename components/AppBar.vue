@@ -73,7 +73,7 @@ export default {
         */
       ],
       menu: [
-        { title: 'Danh sách lớp', icon: 'mdi-book-education', action: 'goToBookingList' },
+        { title: 'Danh sách lớp', icon: 'mdi-book-education', action: 'goToClassList' },
         { title: 'Thông báo', icon: 'mdi-bell', action: '' },
         { title: 'Tài khoản của tôi', icon: 'mdi-account', action: '' },
         { title: 'Đăng xuất', icon: 'mdi-logout', action: 'signOut' }
@@ -84,8 +84,8 @@ export default {
     invokeMenuAction (action) {
       this[action]()
     },
-    goToBookingList () {
-      this.$router.push({ name: 'bookings' })
+    goToClassList () {
+      this.$router.push({ name: 'my-class' })
     },
     signOut () {
       this.$store.dispatch('user/signOut')
