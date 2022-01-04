@@ -201,6 +201,7 @@
 <script>
 import { mapState } from 'vuex'
 import { requestAPI } from '~/api/request'
+import { classAPI } from '~/api/class'
 import ConfirmDialog from '~/components/ConfirmDialog'
 
 export default {
@@ -252,7 +253,7 @@ export default {
       let status = ''
       switch (originalStatus) {
         case 'waiting':
-          status = 'Đang chờ'
+          status = 'Chưa có gia sư'
           break
         case 'on-going':
           status = 'Đang tiến hành'
@@ -263,9 +264,11 @@ export default {
       }
       return status
     },
+
     capitalizeFirstLetter (str) {
       return str.charAt(0).toUpperCase() + str.slice(1)
     },
+
     generateDetailsTableData () {
       const data = [
         {
@@ -278,7 +281,8 @@ export default {
       ]
       return data
     },
-    applyForRequest () {
+
+    async applyForRequest () {
       this.isApplying = true
 
       const tutorData = {
@@ -287,7 +291,8 @@ export default {
         name: this.tutor.name,
         status: 'applying'
       }
-      requestAPI.updateTutorDataOfRequest(
+
+      await requestAPI.updateTutorDataOfRequest(
         this.requestOwner,
         this.requestId,
         tutorData
@@ -301,6 +306,17 @@ export default {
           this.isApplying = false
           console.log(err)
         })
+
+      await classAPI.addClass(
+        tutorData.email,
+        {
+          contact: this.requestOwner,
+          id: this.requestId,
+          status: 'applying'
+        }
+      )
+
+      this.$router.push({ name: 'my-class' })
     }
   }
 }
