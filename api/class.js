@@ -67,6 +67,14 @@ const getClassDataById = async (userEmail, id) => {
   return classList
 }
 
+const addClass = async (tutorEmail, classData) => {
+  let classIds = await getAllClassIds(tutorEmail)
+  classIds.push({ ...classData })
+
+  const docRef = doc(db, _rootCollection, tutorEmail)
+  await updateDoc(docRef, { class: classIds })
+}
+
 const updateClassStatus = async (id, status) => {
   let tutorDoc = localStorage.getItem('email')
   let classIds = await getAllClassIds(tutorDoc)
@@ -98,6 +106,7 @@ export const classAPI = {
   getAllClassData,
   getClassDataByStatus,
   getClassDataById,
+  addClass,
   updateClassStatus,
   rejectClass
 }
