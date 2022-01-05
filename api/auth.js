@@ -42,6 +42,16 @@ const signUserOut = () => {
     })
 }
 
+const changePassword = async (newPassword) => {
+  await authService.changePassword(newPassword)
+
+  return authService.signUserOut()
+    .then(() => {
+      localStorage.removeItem('uid')
+      localStorage.removeItem('email')
+    })
+}
+
 const getTutors = async () => {
   const querySnapshot = await getDocs(
     collection(db, _rootCollection)
@@ -55,5 +65,6 @@ export const authAPI = {
   getTutors,
   signUserIn,
   signUserUp,
-  signUserOut
+  signUserOut,
+  changePassword
 }

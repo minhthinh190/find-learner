@@ -3,7 +3,8 @@ import { getAuth } from 'firebase/auth'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
+  updatePassword
 } from 'firebase/auth'
 
 const auth = getAuth(app)
@@ -20,8 +21,13 @@ const signUserOut = () => {
   return signOut(auth)
 }
 
+const changePassword = (newPassword) => {
+  return updatePassword(auth.currentUser, newPassword)
+}
+
 export const authService = {
   signUserIn,
   signUserUp,
-  signUserOut
+  signUserOut,
+  changePassword
 }

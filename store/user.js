@@ -57,6 +57,13 @@ export const actions = {
       })
   },
 
+  changePassword ({ commit }, { newPassword }) {
+    return authAPI.changePassword(newPassword)
+      .then(() => {
+        commit('setUser', { id: null, email: null })
+      })
+  },
+
   async getUserProfile ({ commit }) {
     const userEmail = localStorage.getItem('email')
     const profile = await tutorAPI.getTutorProfile(userEmail)

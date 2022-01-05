@@ -16,21 +16,24 @@
           <v-card-title class="px-0 pt-0 pb-4">
             <v-avatar
               color="grey lighten-2"
-            ></v-avatar>
+            >
+              <v-img :src="tutor.avatar"/>
+            </v-avatar>
 
             <h4 class="ml-3">{{ tutor ? tutor.name : '' }}</h4>
           </v-card-title>
           
-          <div class="px-4 py-2 nav-item">
+          <div class="py-2 nav-item">
             <v-icon class="mr-3">
               mdi-account
             </v-icon>
 
-            <nuxt-link to="" class="nav-link">
+            <nuxt-link to="/my-account" class="nav-link">
               Tài khoản của tôi
             </nuxt-link>
           </div>
 
+          <!--
           <div class="px-4 py-2 nav-item">
             <v-icon class="mr-3">
               mdi-bell
@@ -40,6 +43,7 @@
               Thông báo
             </nuxt-link>
           </div>
+          -->
         </v-container>
       </v-col>
 
@@ -354,7 +358,6 @@ export default {
 }
 .nav-item:hover {
   cursor: pointer;
-  background: #EEEEEE;
 }
 .nav-item:hover .nav-link {
   color: black;

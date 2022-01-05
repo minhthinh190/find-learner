@@ -12,10 +12,12 @@
         <v-row class="py-4">
           <v-col cols="4">
             <h2 class="mb-4">Find Learner</h2>
+            <!--
             <p>
               Dribbble is the world’s leading community for creatives to share, grow, and get hired.
               Lorem ipsum dolor sit amet lorem ipsum dolor sit amet.
             </p>
+            -->
             <p class="ma-0">
               Hotline: <b>19001000</b>
             </p>

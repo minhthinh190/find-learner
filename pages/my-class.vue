@@ -16,7 +16,9 @@
           <v-card-title class="px-0 pt-0 pb-4">
             <v-avatar
               color="grey lighten-2"
-            ></v-avatar>
+            >
+              <v-img :src="tutor.avatar"/>
+            </v-avatar>
 
             <h4 class="ml-3">{{ tutor ? tutor.name : '' }}</h4>
           </v-card-title>
@@ -26,11 +28,12 @@
               mdi-account
             </v-icon>
 
-            <nuxt-link to="" class="nav-link">
+            <nuxt-link to="/my-account" class="nav-link">
               Tài khoản của tôi
             </nuxt-link>
           </div>
 
+          <!--
           <div class="py-2 nav-item">
             <v-icon class="mr-2">
               mdi-bell
@@ -40,6 +43,7 @@
               Thông báo
             </nuxt-link>
           </div>
+          -->
         </v-container>
       </v-col>
 
