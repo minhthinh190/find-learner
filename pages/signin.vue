@@ -37,9 +37,11 @@
                 @keyup.enter="signIn"
               ></v-text-field>
 
+              <!--
               <nuxt-link to="" class="link">
                 Quên mật khẩu?
               </nuxt-link>
+              -->
             </v-form>
           </v-card-text>
 
